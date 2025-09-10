@@ -179,8 +179,25 @@ class Board{
         ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
 
         //fill colour for the four corners
+        ctx.beginPath();
         ctx.fillStyle = "yellow";
-        ctx.fillCirc()
+        ctx.arc(0, 0, 275, 0, 2*Math.PI, true);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "blue";
+        ctx.arc(canvasWidth, 0, 275, 0, 2*Math.PI, true);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "purple";
+        ctx.arc(canvasWidth, canvasHeight, 275, 0, 2*Math.PI, true);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.fillStyle = "orange";
+        ctx.arc(0, canvasHeight, 275, 0, 2*Math.PI, true);
+        ctx.fill();
 
         //for each tile in the Tiles array, draw it in its position
         //the tile knows how to Draw itself.
