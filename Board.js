@@ -7,9 +7,9 @@ var tileHeight = 7;
 //conversion between tile and canvas
 var squareSize = 100;
 //tile formatting variables
-var cornerSize = 7;
+var cornerSize = 15;
 var fontHeight = 15;
-var fontRowLength = 25;
+var fontRowLength = 20;
 
 var drawGrid = true;
 
@@ -26,6 +26,10 @@ var board;
 var boardCanvas;
 var hand;
 var handCanvas;
+
+var numPlayers = 3;
+var hands = [];
+var handCanvases = [];
 
 function Shuffle(array){
     let currentIndex = array.length;
@@ -65,9 +69,26 @@ class Tile{
         //draw in the border of the tile
         ctx.fillRect(positionX, positionY, squareSize, squareSize);
         ctx.strokeRect(positionX, positionY, squareSize, squareSize);
+
+        //fill in the corners: Sun, Damp, Shade and Dry in the corners
+        if(this.brightIcon){
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(positionX+2, positionY+2, cornerSize, cornerSize);
+        }
+        if(this.dampIcon){
+            ctx.fillStyle = "blue";
+            ctx.fillRect(positionX + squareSize - cornerSize-2, positionY+2, cornerSize, cornerSize);
+        }
+        if(this.darkIcon){
+            ctx.fillStyle = "purple";
+            ctx.fillRect(positionX + squareSize - cornerSize-2, positionY + squareSize - cornerSize-2, cornerSize, cornerSize);
+        }
+        if(this.dryIcon){
+            ctx.fillStyle = "orange";
+            ctx.fillRect(positionX+2, positionY + squareSize - cornerSize-2, cornerSize, cornerSize);
+        }
         
         //fill in the text defining the card
-        
         ctx.textAlign = "center";
         ctx.strokeText(this.name, positionX + squareSize/2, positionY + fontHeight, squareSize);
 
@@ -110,32 +131,17 @@ class Tile{
                 }
             }
             //anything left over when remaining text runs out, print it in the final position before moving on
+            if(line.length + word.length > fontRowLength){
+                ctx.strokeText(line, positionX + squareSize/2, positionY + squareSize/2 + fontHeight * lineIndex, squareSize);
+                lineIndex++;
+                line = "";
+            }
             line += word;
             word = "";
             ctx.strokeText(line, positionX + squareSize/2, positionY + squareSize/2 + fontHeight * lineIndex, squareSize);
         }else{
             //if text is not too long, just print it out as is.
             ctx.strokeText(this.text, positionX + squareSize/2, positionY + squareSize/2, squareSize);
-        }
-        
-
-        //fill in the corners: Bright, Damp, Dark and Dry in the corners
-        
-        if(this.brightIcon){
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(positionX+2, positionY+2, cornerSize, cornerSize);
-        }
-        if(this.dampIcon){
-            ctx.fillStyle = "blue";
-            ctx.fillRect(positionX + squareSize - cornerSize-2, positionY+2, cornerSize, cornerSize);
-        }
-        if(this.darkIcon){
-            ctx.fillStyle = "purple";
-            ctx.fillRect(positionX + squareSize - cornerSize-2, positionY + squareSize - cornerSize-2, cornerSize, cornerSize);
-        }
-        if(this.dryIcon){
-            ctx.fillStyle = "orange";
-            ctx.fillRect(positionX+2, positionY + squareSize - cornerSize-2, cornerSize, cornerSize);
         }
     }
     get rotated(){
@@ -233,6 +239,8 @@ class Board{
             ctx.strokeStyle = "yellow";
             ctx.strokeRect(x*squareSize, y*squareSize, squareSize, squareSize);
             ctx.strokeRect(x*squareSize+1, y*squareSize+1, squareSize-2, squareSize-2);
+            ctx.strokeRect(x*squareSize+2, y*squareSize+2, squareSize-4, squareSize-4);
+            ctx.strokeRect(x*squareSize+3, y*squareSize+3, squareSize-6, squareSize-6);
         }
     }
 
@@ -277,10 +285,28 @@ function addTiles(tile, rotations){
     }
 }
 function makeTileDictionary(){
-    addTiles(new Tile("+2 Flower", "Score 2 points in my Preferred Zone", true, false, false, false), 3);
-    addTiles(new Tile("Zoning Device", "Device*Adjacent zones count as +1 my Preferred Zone", true, false, false, false), 3);
-    addTiles(new Tile("Hybrid Flower", "If im in both preferred Zones, score +1. Score my preferred zone strength", true, true, false, false), 3);
-    addTiles(new Tile("Weeds", "Score -1 Anywhere", true, true, true, true), 3);
+    //Flowers: Single Zone
+    addTiles(new Tile("Variable Flower", "Score [Strength] in [Pref]", true, false, false, false), 3);
+    addTiles(new Tile("+2 Flower", "Score [2] in [Pref]", true, false, false, false), 3);
+    addTiles(new Tile("Strong Preferred","If [Location] is [Pref] with [Strength 2+], Score [2]", true, false, false, false),3);
+    addTiles(new Tile("Thriving Preferred","If [Location] is [Pref] with [Strength 1], Score [2]", true, false, false, false),3);
+    addTiles(new Tile("Anywhere but There", "Score [1] if [Location] is [Not] [Opposite]", true, false, false, false), 3);
+    addTiles(new Tile("Spacious", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 1);
+
+    //Flowers: Hybrid Zone
+    addTiles(new Tile("Hybrid Flower", "If [Location] is [Both Pref], Score [1]. Also, Score [Strength] in [Pref]", true, true, false, false), 3);
+    
+    //Flowers: Unique Effect
+    addTiles(new Tile("Weeds", "Score [-1]", true, true, true, true), 3);
+    addTiles(new Tile("Cluster Flower", "Score [1] same flower [Adjacent]", false, false, false, false), 3);
+    
+    //Devices:
+    addTiles(new Tile("Zoning Device", "[Device]*[Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3);
+    addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
+    
+    //Decorations:  
+    addTiles(new Tile("Decorative Rock", "Decor*If [Adjacent] [Plant] has [Score 2+], Score [1]", false, false, false, false), 1);
+    addTiles(new Tile("Regional Decor", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3);
 }
 //functional: onClicks
 function onClickHand(event){
@@ -292,12 +318,16 @@ function onClickHand(event){
     var tileX = Math.floor(clickX / squareSize);
     var tileY = Math.floor(clickY / squareSize);
 
+    //grab the hand that was clicked on
+    var canvas = event.target;
+    var index = canvas.number;
+
     //check1: if we click a previously hilighted tile, cancel the hilight
-    if(hand.highlightX == tileX && hand.highlightY == tileY){
-        hand.unhilight();
+    if(hands[index].highlightX == tileX && hands[index].highlightY == tileY){
+        hands[index].unhilight();
     }else{
         //otherwise, hilight that tile
-        hand.hilight(tileX, tileY);
+        hands[index].hilight(tileX, tileY);
     }
 
     //check2: if we hilighted the board and a hand, place the tile from the hand onto the board.
@@ -307,7 +337,7 @@ function onClickHand(event){
         
 
     //then, redraw the hand, so we see the hilight, unhilight, or placed tile
-    hand.draw(event.target);
+    hands[index].draw(event.target);
 }
 function onClickBoard(event){
     var clickX = event.offsetX;
@@ -325,18 +355,23 @@ function onClickBoard(event){
     }
 
     //check2: if we have a hilighted tile in hand, try to place it on the board
-    if(board.isHilighted && hand.isHilighted){
-        placeTile();
+    // if(board.isHilighted && hand.isHilighted){
+    //     placeTile();
+    // }
+    if(board.isHilighted){
+        hands.forEach(hand => {
+            if(hand.isHilighted) placeTile(hand);
+        });
     }
 
     //then, redraw the board so we see the hilight, unhilight, or placed tile
     board.draw(event.target);
 }
 
-function placeTile(){
+function placeTile(hand){
     //check condition: if the board already has a tile, dont place unless a setting is checked
     //TODO: update this with a checkbox condition
-    if(board.getTileHilighted() != null) return;
+    if(!board.isHilighted) return;
 
     //get the tile from hand
     var tile = hand.getTileHilighted();
@@ -355,7 +390,10 @@ function placeTile(){
     hand.unhilight();
 
     //then redraw both board and hand
-    hand.draw(handCanvas);
+    // hand.draw(handCanvas);
+    for(var i=0;i<hands.length;i++){
+        hands[i].draw(handCanvases[i]);
+    }
     board.draw(boardCanvas);
 }
 
@@ -368,8 +406,29 @@ function main(){
     boardCanvas = document.getElementById("board");
     boardCanvas.onclick = onClickBoard;
 
-    handCanvas = document.getElementById("hand");
-    handCanvas.onclick = onClickHand;
+    // handCanvas = document.getElementById("hand");
+    // handCanvas.onclick = onClickHand;
+
+    //get a number of hands, equal to the number of selected players
+    for(var i = 0; i < numPlayers; i++){
+        //make the Canvas Element
+        // //<canvas id="hand" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas>
+        var thisHand = document.createElement("canvas");
+        thisHand.name = "hand" + i;
+        thisHand.width = 500; //5 tiles wide
+        thisHand.height = 100; //1 tile tall
+        thisHand.style = "float: left; border: 1px solid #000000; margin: 1em;";
+        thisHand.number = i;
+        thisHand.onclick = onClickHand;
+        //add it to the main, at the end
+        document.getElementById("main").append(thisHand);
+
+        //record the canvas, and make the board
+        handCanvases[i] = thisHand;
+        hands[i] = new Board(5, 1);
+        hands[i].draw(thisHand);
+    }
+
     //make the predefined tiles
     makeTileDictionary();
 
@@ -377,7 +436,7 @@ function main(){
     tileDeck = [...tileDict];
     Shuffle(tileDeck);
     for(var i = 0; i<handSize;i++){
-        hand.setTile(tileDeck.shift(), i, 0);
+        hands.forEach(hand => hand.setTile(tileDeck.shift(), i, 0));
     }
 
     //setup the "board"
@@ -393,7 +452,11 @@ function main(){
 
     //draw everything for the first time
     board.draw(boardCanvas);
-    hand.draw(handCanvas);
+    for(var i=0;i<hands.length;i++){
+        hands[i].draw(handCanvases[i]);
+    }
+    // hand.draw(handCanvas);
+    
 }
 
 main();
