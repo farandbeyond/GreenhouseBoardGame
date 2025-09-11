@@ -53,15 +53,24 @@ function addTile(tile){
     tileDict.push(tile);
 }
 function addTiles(tile, rotations){
+    var namesArr = [];
+    for(var i=0;i<rotations;i++){
+        namesArr.push(tile.name);
+    }
+    addTilesNames(tile, rotations, namesArr);
+}
+function addTilesNames(tile, rotations, namesArr){
+    // tile.name = namesArr[0];
     addTile(tile);
     for(var i=0;i<rotations;i++){
         tile = tile.rotated;
+        tile.name = namesArr[i];
         addTile(tile);
     }
 }
 function makeTileDictionary(){
     //Flowers: Single Zone
-    addTiles(new Tile("Variable Flower", "Score [Strength] in [Pref]", true, false, false, false), 3);
+    addTilesNames(new Tile("Daybloom", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Waterlily","Moonglow","Fireblossom"]);
     addTiles(new Tile("+2 Flower", "Score [2] in [Pref]", true, false, false, false), 3);
     addTiles(new Tile("Strong Preferred","If [Location] is [Pref] with [Strength 2+], Score [2]", true, false, false, false),3);
     addTiles(new Tile("Thriving Preferred","If [Location] is [Pref] with [Strength 1], Score [2]", true, false, false, false),3);
@@ -76,7 +85,7 @@ function makeTileDictionary(){
     addTiles(new Tile("Cluster Flower", "Score [1] same flower [Adjacent]", false, false, false, false), 3);
     
     //Devices:
-    addTiles(new Tile("Zoning Device", "[Device]*[Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3);
+    addTiles(new Tile("Zoning Device", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3);
     addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
     
     //Decorations:  
@@ -298,7 +307,6 @@ function main(){
     //make the predefined tiles
     makeTileDictionary();
 
-    
     //setup a fresh gamestate
     setupNewGame();
 
@@ -306,8 +314,6 @@ function main(){
     document.getElementById("2Game").onclick = (e => {numPlayers = 2; setupNewGame()});
     document.getElementById("3Game").onclick = (e => {numPlayers = 3; setupNewGame()});
     document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
-
-
 
     //draw everything for the first time
     board.draw(boardCanvas);

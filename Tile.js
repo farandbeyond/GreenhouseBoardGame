@@ -116,7 +116,7 @@ class Tile{
         }
     }
     get rotated(){
-        return new Tile(this.name, this.text, this.dampIcon, this.darkIcon, this.dryIcon, this.brightIcon);
+        return new Tile(this.name, this.text, this.dryIcon, this.brightIcon, this.dampIcon, this.darkIcon);
     }
 }
 
