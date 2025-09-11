@@ -5,25 +5,33 @@ var squareSize = 100;
 //canvas dimensions
 var canvasWidth = 700;
 var canvasHeight = 700;
-//tile amount(s)
+
+//tile amount(s) on main board
 var tileWidth = 7;
 var tileHeight = 7;
 
 //tile dictionary
 var tileDict = [];
 
-//tile Deck and Hand
+//tile Deck
 var tileDeck = [];
-var tilesInHand = [];
-var handSize = 5;
 
 //global access: Board and Hand(s)
 var board;
 var boardCanvas;
 
+var turnPlayer = 0;
 var numPlayers = 3;
+var tilesPlaced = 0;
+
+var handSize = 5;
 var hands = [];
 var handCanvases = [];
+
+//global access: player indicators
+var deckIndicator;
+var turnIndicator;
+var boardIndicator;
 
 function Shuffle(array){
     let currentIndex = array.length;
@@ -64,7 +72,7 @@ function makeTileDictionary(){
     addTiles(new Tile("Hybrid Flower", "If [Location] is [Both Pref], Score [1]. Also, Score [Strength] in [Pref]", true, true, false, false), 3);
     
     //Flowers: Unique Effect
-    addTiles(new Tile("Weeds", "Score [-1]", true, true, true, true), 3);
+    addTiles(new Tile("Weeds", "Score [-1]", false, false, false, false), 3);
     addTiles(new Tile("Cluster Flower", "Score [1] same flower [Adjacent]", false, false, false, false), 3);
     
     //Devices:
@@ -74,6 +82,16 @@ function makeTileDictionary(){
     //Decorations:  
     addTiles(new Tile("Decorative Rock", "Decor*If [Adjacent] [Plant] has [Score 2+], Score [1]", false, false, false, false), 1);
     addTiles(new Tile("Regional Decor", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3);
+}
+//update the player view
+function updateDeckIndicator(){
+    deckIndicator.innerText = "Remaining Tiles: "+tileDeck.length;
+}
+function updateTurnIndicator(){
+    turnIndicator.innerText = "Player "+(turnPlayer+1)+"'s turn";
+}
+function updateBoardIndicator(){
+    boardIndicator.innerText = tilesPlaced+" tiles Placed";
 }
 //functional: onClicks
 function onClickHand(event){
@@ -121,9 +139,9 @@ function onClickBoard(event){
         if(board.getTileHilighted() == null) return;
         if(event.shiftKey && event.ctrlKey){
             board.getTileHilighted().scoreNote = 0;
-        }else if (event.shiftKey){
+        }else if (event.ctrlKey){
             board.getTileHilighted().scoreNote -= 1;
-        }else{
+        }else{ //if shiftKey
             board.getTileHilighted().scoreNote += 1;
         }
     }else{
@@ -152,7 +170,6 @@ function onClickBoard(event){
     //then, redraw the board so we see the hilight, unhilight, or placed tile
     board.draw(event.target);
 }
-
 function placeTile(hand){
     //check condition: if the board already has a tile, dont place unless a setting is checked
     //TODO: update this with a checkbox condition
@@ -163,13 +180,14 @@ function placeTile(hand){
 
     //add it to the board
     board.setTileHilighted(tile);
+    tilesPlaced++;
     
     //unhilight the board
     board.unhilight();
 
     //fill the hand from the deck
     hand.setTileHilighted(tileDeck.shift());
-    console.log("Remaining Tiles: "+tileDeck.length);
+    // console.log("Remaining Tiles: "+tileDeck.length);
 
     //and unhilight the hand
     hand.unhilight();
@@ -180,13 +198,18 @@ function placeTile(hand){
         hands[i].draw(handCanvases[i]);
     }
     board.draw(boardCanvas);
+    
+    passTurn();
+    updateDeckIndicator();
+    updateBoardIndicator();
 }
 
-
-function main(){
+function setupNewGame(){
     //setup Board and Hand
     board = new Board(7,7);
-    hand = new Board(5,1);
+    board.drawBackground = true;
+    //hand = new Board(5,1);
+
     //get Canvases for drawing purposes
     boardCanvas = document.getElementById("board");
     boardCanvas.onclick = onClickBoard;
@@ -195,11 +218,21 @@ function main(){
     // handCanvas.onclick = onClickHand;
 
     //get a number of hands, equal to the number of selected players
+    handCanvases.forEach(e => {
+        e.remove();
+    });
+    hands = [];
+    handCanvases = [];
     for(var i = 0; i < numPlayers; i++){
         //make the Canvas Element
+        // if(document.getElementById("hand"+i) != null){
+        //     document.getElementById("hand"+i).remove();
+        //     console.log("Delet!");
+        // }
         // //<canvas id="hand" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas>
         var thisHand = document.createElement("canvas");
         thisHand.name = "hand" + i;
+        thisHand.id = "hand" + i;
         thisHand.width = 500; //5 tiles wide
         thisHand.height = 100; //1 tile tall
         thisHand.style = "float: left; border: 1px solid #000000; margin: 1em;";
@@ -214,9 +247,6 @@ function main(){
         hands[i].draw(thisHand);
     }
 
-    //make the predefined tiles
-    makeTileDictionary();
-
     //setup the "deck" and the "hand"
     tileDeck = [...tileDict];
     Shuffle(tileDeck);
@@ -226,7 +256,20 @@ function main(){
 
     //setup the "board"
     board.setTile(new Tile("Fountain", "Starting Position",true, true, true, true), 3, 3);
-    
+
+    //do the inital draw
+    board.draw(boardCanvas);
+    for(var i=0;i<hands.length;i++){
+        hands[i].draw(handCanvases[i]);
+    }
+
+    tilesPlaced = 0;
+    turnPlayer = -1;
+    passTurn();
+
+    updateTurnIndicator();
+    updateDeckIndicator();
+    updateBoardIndicator();
     //debug: set up the board with random shit
     // board.setTile(tileDict[2], 1, 1);
     // board.setTile(tileDict[3], 3, 1);
@@ -234,6 +277,37 @@ function main(){
     // board.setTile(tileDict[5], 2, 6);
     // board.setTile(tileDict[8], 5, 6);
     // board.setTile(tileDict[12], 4, 6);
+}
+function passTurn(){
+    if(turnPlayer != -1){
+        handCanvases[turnPlayer].style = "float: left; border: 1px solid #000000; margin: 1em;";
+    }
+    turnPlayer++;
+    if(turnPlayer>=numPlayers) turnPlayer = 0;
+    handCanvases[turnPlayer].style = "float: left; border: 1em solid #FF0000; margin: 1px;";
+    updateTurnIndicator();
+}
+
+
+function main(){
+    //grab static UI from the webpage
+    turnIndicator = document.getElementById("turnIndicator");
+    deckIndicator = document.getElementById("deckIndicator");
+    boardIndicator = document.getElementById("boardIndicator");
+    
+    //make the predefined tiles
+    makeTileDictionary();
+
+    
+    //setup a fresh gamestate
+    setupNewGame();
+
+    //element hooks: for the Buttons
+    document.getElementById("2Game").onclick = (e => {numPlayers = 2; setupNewGame()});
+    document.getElementById("3Game").onclick = (e => {numPlayers = 3; setupNewGame()});
+    document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
+
+
 
     //draw everything for the first time
     board.draw(boardCanvas);
@@ -241,7 +315,6 @@ function main(){
         hands[i].draw(handCanvases[i]);
     }
     // hand.draw(handCanvas);
-    
 }
 
 main();

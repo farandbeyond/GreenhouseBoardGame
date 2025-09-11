@@ -1,11 +1,18 @@
 <html>
     <header>
-
+        <button id="2Game">Start 2 player game</button>
+        <button id="3Game">Start 3 player game</button>
+        <button id="4Game">Start 4 player game</button>
     </header>
     <body>
         <main id="main">
             <canvas id="board" width="700" height="700" style="float: left; border: 1px solid #000000;"></canvas>
-            <!-- <canvas id="hand" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas> -->
+            <div id="gameState" style="width: 500; height: 100; display: block; float: left; border: 1px solid #000000; margin: 1em;">
+                <p id="turnIndicator">Someone's Turn</p>
+                <p id="deckIndicator">X Tiles Unseen</p>
+                <p id="boardIndicator">X Tiles Placed</p>
+            </div>
+            <!-- <canvas id="hand0" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas> -->
         </main>
     </body>
     <footer>

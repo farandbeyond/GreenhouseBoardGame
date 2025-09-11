@@ -13,6 +13,7 @@ class Board{
     isHilighted = false;
     highlightX = -1;
     highlightY = -1;
+    drawBackground = false;
     constructor(tilesLong, tilesHigh){
         this.tiles = [tilesHigh * tilesLong];
         for(var x = 0; x < tilesLong; x++){
@@ -43,33 +44,36 @@ class Board{
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
         ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
 
-        //fill colour for the four corners
-        ctx.beginPath();
-        ctx.fillStyle = "yellow";
-        ctx.arc(0, 0, 275, 0, 2*Math.PI, true);
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.fillStyle = "blue";
-        ctx.arc(canvasWidth, 0, 275, 0, 2*Math.PI, true);
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.fillStyle = "purple";
-        ctx.arc(canvasWidth, canvasHeight, 275, 0, 2*Math.PI, true);
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.fillStyle = "orange";
-        ctx.arc(0, canvasHeight, 275, 0, 2*Math.PI, true);
-        ctx.fill();
-
         //for each tile in the Tiles array, draw it in its position
         //the tile knows how to Draw itself.
         for(var x = 0; x < tileWidth; x++){
             for(var y = 0; y < tileHeight; y++){
                 this.drawTile(canvas, x, y);
             }
+        }
+        //fill colour for the four corners
+        if(this.drawBackground){
+            ctx.globalAlpha = 0.5;
+            ctx.beginPath();
+            ctx.fillStyle = "yellow";
+            ctx.arc(0, 0, 275, 0, 2*Math.PI, true);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = "blue";
+            ctx.arc(canvasWidth, 0, 275, 0, 2*Math.PI, true);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = "purple";
+            ctx.arc(canvasWidth, canvasHeight, 275, 0, 2*Math.PI, true);
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.fillStyle = "orange";
+            ctx.arc(0, canvasHeight, 275, 0, 2*Math.PI, true);
+            ctx.fill();
+            ctx.globalAlpha = 1;
         }
     }
 
