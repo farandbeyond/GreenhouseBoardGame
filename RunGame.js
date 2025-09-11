@@ -71,22 +71,24 @@ function addTilesNames(tile, rotations, namesArr){
 function makeTileDictionary(){
     //Flowers: Single Zone
     addTilesNames(new Tile("Daybloom", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Waterlily","Moonglow","Fireblossom"]);
-    addTiles(new Tile("+2 Flower", "Score [2] in [Pref]", true, false, false, false), 3);
-    addTiles(new Tile("Strong Preferred","If [Location] is [Pref] with [Strength 2+], Score [2]", true, false, false, false),3);
-    addTiles(new Tile("Thriving Preferred","If [Location] is [Pref] with [Strength 1], Score [2]", true, false, false, false),3);
+    addTiles(new Tile("Picky Pref", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3);
+    addTiles(new Tile("Weak Preferred","Score [1] in [Pref]", true, false, false, false),3);
+    addTiles(new Tile("Thriving Preferred","Score [2] in [Pref] if [Location] is [Strength 1], ", true, false, false, false),3);
     addTiles(new Tile("Anywhere but There", "Score [1] if [Location] is [Not] [Opposite]", true, false, false, false), 3);
     addTiles(new Tile("Spacious", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 1);
 
     //Flowers: Hybrid Zone
-    addTiles(new Tile("Hybrid Flower", "If [Location] is [Both Pref], Score [1]. Also, Score [Strength] in [Pref]", true, true, false, false), 3);
+    addTiles(new Tile("Hybrid Flower", "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead", true, true, false, false), 3);
+    addTiles(new Tile("Varied Flower", "Score [2] in [Pref]", true, true, false, false), 3);
     
     //Flowers: Unique Effect
-    addTiles(new Tile("Weeds", "Score [-1]", false, false, false, false), 3);
-    addTiles(new Tile("Cluster Flower", "Score [1] same flower [Adjacent]", false, false, false, false), 3);
+    addTiles(new Tile("Weeds", "Score [-2]", false, false, false, false), 3);
+    addTiles(new Tile("Cluster Flower", "Score [+1] per same flower [Adjacent]", false, false, false, false), 5);
     
     //Devices:
-    addTiles(new Tile("Zoning Device", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3);
+    addTilesNames(new Tile("Sun Lamp", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Dehumidifier"]);
     addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
+    addTiles(new Tile("Shovel", "Place covering [Flower] tile. This tile counts as [Empty]", false, false, false, false), 1);
     
     //Decorations:  
     addTiles(new Tile("Decorative Rock", "Decor*If [Adjacent] [Plant] has [Score 2+], Score [1]", false, false, false, false), 1);
