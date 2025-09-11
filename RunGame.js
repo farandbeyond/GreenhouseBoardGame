@@ -16,6 +16,9 @@ var tileDict = [];
 //tile Deck
 var tileDeck = [];
 
+//control variables
+var safeMode = true;
+
 //global access: Board and Hand(s)
 var board;
 var boardCanvas;
@@ -170,7 +173,8 @@ function onClickBoard(event){
         //     placeTile();
         // }
         if(board.isHilighted){
-            hands.forEach(hand => {
+            if(board.getTileHilighted() != null && safeMode) return;
+            else hands.forEach(hand => {
                 if(hand.isHilighted) placeTile(hand);
             });
         }
@@ -316,6 +320,9 @@ function main(){
     document.getElementById("2Game").onclick = (e => {numPlayers = 2; setupNewGame()});
     document.getElementById("3Game").onclick = (e => {numPlayers = 3; setupNewGame()});
     document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
+
+    document.getElementById("safeModeCheck").onchange = (e => safeMode = e.target.checked);
+    safeMode = document.getElementById("safeModeCheck").checked;
 
     //draw everything for the first time
     board.draw(boardCanvas);
