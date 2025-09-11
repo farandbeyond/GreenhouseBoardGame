@@ -33,6 +33,15 @@ class Board{
         return this.isHilighted;
     }
 
+    getMarkedScore(){
+        var score = 0;
+        this.tiles.forEach(tile => {
+            if(tile == null) return;
+            score += tile.scoreNote;
+        });
+        return score;
+    }
+
     draw(canvas){
         //get the graphics to draw with
         var ctx = canvas.getContext("2d");

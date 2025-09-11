@@ -35,6 +35,7 @@ var handCanvases = [];
 var deckIndicator;
 var turnIndicator;
 var boardIndicator;
+var scoreIndicator;
 
 function Shuffle(array){
     let currentIndex = array.length;
@@ -107,6 +108,9 @@ function updateTurnIndicator(){
 function updateBoardIndicator(){
     boardIndicator.innerText = tilesPlaced+" tiles Placed";
 }
+function updateScoreIndicator(score){
+    scoreIndicator.innerText = "Total (Marked) Score: " + score;
+}
 //functional: onClicks
 function onClickHand(event){
     //find the click
@@ -158,6 +162,7 @@ function onClickBoard(event){
         }else{ //if shiftKey
             board.getTileHilighted().scoreNote += 1;
         }
+        updateScoreIndicator(board.getMarkedScore());
     }else{
         //otherwise, we do normal things
         //check1: if we click a previously hilighted tile, cancel the hilight
@@ -285,6 +290,7 @@ function setupNewGame(){
     updateTurnIndicator();
     updateDeckIndicator();
     updateBoardIndicator();
+    updateScoreIndicator(0);
     //debug: set up the board with random shit
     // board.setTile(tileDict[2], 1, 1);
     // board.setTile(tileDict[3], 3, 1);
@@ -309,6 +315,7 @@ function main(){
     turnIndicator = document.getElementById("turnIndicator");
     deckIndicator = document.getElementById("deckIndicator");
     boardIndicator = document.getElementById("boardIndicator");
+    scoreIndicator = document.getElementById("scoreIndicator");
     
     //make the predefined tiles
     makeTileDictionary();
@@ -322,7 +329,7 @@ function main(){
     document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
 
     document.getElementById("safeModeCheck").onchange = (e => safeMode = e.target.checked);
-    safeMode = document.getElementById("safeModeCheck").checked;
+    // safeMode = document.getElementById("safeModeCheck").checked;
 
     //draw everything for the first time
     board.draw(boardCanvas);
