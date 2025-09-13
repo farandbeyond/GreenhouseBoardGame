@@ -1,27 +1,31 @@
 <html>
     <header>
-        <button id="2Game">Start 2 player game</button>
-        <button id="3Game">Start 3 player game</button>
-        <button id="4Game">Start 4 player game</button>
+        <link rel="stylesheet" href="main.css">
+        <div id="topBar">
+            <button id="2Game">Start 2 player game</button>
+            <button id="3Game">Start 3 player game</button>
+            <button id="4Game">Start 4 player game</button>
 
-        <label for="safeModeCheck">Safe Mode?</label>
-        <input id="safeModeCheck" type="checkbox" checked>
+            <label for="safeModeCheck">Safe Mode?</label>
+            <input id="safeModeCheck" type="checkbox" checked>
+        </div>
     </header>
     <body>
         <main id="main">
-            <canvas id="board" width="700" height="700" style="float: left; border: 1px solid #000000;"></canvas>
-            <div id="gameState" style="width: 500; height: 100; display: block; float: left; border: 1px solid #000000; margin: 1em;">
-                
-                <p id="turnIndicator" style="float: left; margin: 1em;">Someone's Turn</p>
-                <p id="deckIndicator" style="float: left; margin: 1em;">X Tiles Unseen</p>
+            <canvas id="board" width="700" height="700"></canvas>
+            <div id="gameState">
+                <p id="turnIndicator">Someone's Turn</p>
+                <p id="deckIndicator">X Tiles Unseen</p>
 
-                <p id="boardIndicator" style="float: left; margin: 1em;">X Tiles Placed</p>
-                <p id="scoreIndicator" style="float: left; margin: 1em;">Total (Marked) Score: XX</p>
+                <p id="boardIndicator">X Tiles Placed</p>
+                <p id="scoreIndicator">Total (Marked) Score: XX</p>
             </div>
+            <div id="hands"></div>
             <!-- <canvas id="hand0" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas> -->
         </main>
     </body>
     <footer>
+        
         <script src="Board.js"></script>
         <script src="Tile.js"></script>
         <script src="RunGame.js"></script>

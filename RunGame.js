@@ -255,11 +255,11 @@ function setupNewGame(){
         thisHand.id = "hand" + i;
         thisHand.width = 500; //5 tiles wide
         thisHand.height = 100; //1 tile tall
-        thisHand.style = "float: left; border: 1px solid #000000; margin: 1em;";
+        thisHand.style = "";
         thisHand.number = i;
         thisHand.onclick = onClickHand;
         //add it to the main, at the end
-        document.getElementById("main").append(thisHand);
+        document.getElementById("hands").append(thisHand);
 
         //record the canvas, and make the board
         handCanvases[i] = thisHand;
