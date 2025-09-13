@@ -24,7 +24,7 @@ class Tile{
         var ctx = canvas.getContext("2d");
 
         ctx.strokeStyle = "black";
-        ctx.fillStyle = "gray";
+        ctx.fillStyle = this.myBackgroundColor;
 
         //switch from Grid measurements to Canvas measurements
         var positionX = tileX * squareSize;
@@ -117,6 +117,22 @@ class Tile{
     }
     get rotated(){
         return new Tile(this.name, this.text, this.dryIcon, this.brightIcon, this.dampIcon, this.darkIcon);
+    }
+    get myBackgroundColor(){
+        var totalColors = this.brightIcon + this.dampIcon + this.darkIcon + this.dryIcon;
+        if(totalColors == 1){
+            if(this.brightIcon) return "rgb(160 122   0)";
+            if(this.dampIcon)   return "rgb(  0  50 122)";;
+            if(this.darkIcon)   return "rgb(160  60  81)";
+            if(this.dryIcon)    return "rgb(122  61   0)";
+        }else if(totalColors == 2){
+            if(this.brightIcon && this.dampIcon)    return "rgb(  0 255 122)";
+            if(this.brightIcon && this.dryIcon)     return "rgb(200 122  20)";
+            if(this.darkIcon && this.dampIcon)      return "rgb( 61  10 200)";
+            if(this.darkIcon && this.dryIcon)       return "rgb(200  10  61)";
+        }else{
+            return "gray";
+        }
     }
 }
 
