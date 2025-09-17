@@ -77,7 +77,7 @@ function makeTileDictionary(){
     addTilesNames(new Tile("Daybloom", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Waterlily","Moonglow","Fireblossom"]);
     addTiles(new Tile("Picky Pref", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3);
     addTiles(new Tile("Weak Preferred","Score [1] in [Pref]", true, false, false, false),3);
-    addTiles(new Tile("Thriving Preferred","Score [2] in [Pref] if [Location] is [Strength 1], ", true, false, false, false),3);
+    addTiles(new Tile("Thriving Preferred","Score [2] in [Pref] if [Location] is *[Strength 1], ", true, false, false, false),3);
     addTiles(new Tile("Anywhere but There", "Score [1] if [Location] is [Not] [Opposite]", true, false, false, false), 3);
     addTiles(new Tile("Spacious", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 1);
 
@@ -86,16 +86,16 @@ function makeTileDictionary(){
     addTiles(new Tile("Varied Flower", "Score [2] in [Pref]", true, true, false, false), 3);
     
     //Flowers: Unique Effect
-    addTiles(new Tile("Weeds", "Score [-2]", false, false, false, false), 3);
-    addTiles(new Tile("Cluster Flower", "Score [+1] per same flower [Adjacent]", false, false, false, false), 5);
+    addTilesNames(new Tile("Dandelion", "Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
+    addTiles(new Tile("Mushroom Cluster", "Score [+1] per [Adjacent] Mushroom Cluster", false, false, false, false), 5);
     
     //Devices:
-    addTilesNames(new Tile("Sun Lamp", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Dehumidifier"]);
+    addTilesNames(new Tile("Grow Light", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Drainage Mat"]);
     addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
     addTiles(new Tile("Shovel", "Place covering [Flower] tile. This tile counts as [Empty]", false, false, false, false), 1);
     
     //Decorations:  
-    addTiles(new Tile("Decorative Rock", "Decor*If [Adjacent] [Plant] has [Score 2+], Score [1]", false, false, false, false), 1);
+    addTiles(new Tile("Decorative Rock", "Decor*If one [Adjacent] [Plant] has [Score 2+], Score [1]", false, false, false, false), 1);
     addTiles(new Tile("Regional Decor", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3);
 }
 //update the player view
