@@ -85,7 +85,7 @@ function makeTileDictionary(){
     addTilesNames(new Tile("Forget-me-not", "Score [2] in [Either] [Pref]", true, true, false, false), 3, ["Orchid", "Hosta", "Lavender"]);
     
     //Flowers: Unique Effect
-    addTilesNames(new Tile("Dandelion", "Weeds*Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
+    addTilesNames(new Tile("Dandelion", "Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
     addTiles(new Tile("Mushroom Cluster", "Score [+1] per [Adjacent] Mushroom Cluster", false, false, false, false), 5);
     addTilesNames(new Tile("Lemon Tree", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 3, ["Orange Tree", "Cherry Tree", "Fig Tree"]);
     
