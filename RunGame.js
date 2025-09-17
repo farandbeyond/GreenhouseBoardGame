@@ -74,20 +74,20 @@ function addTilesNames(tile, rotations, namesArr){
 }
 function makeTileDictionary(){
     //Flowers: Single Zone
-    addTilesNames(new Tile("Daybloom", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Waterlily","Moonglow","Fireblossom"]);
-    addTiles(new Tile("Picky Pref", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3);
-    addTiles(new Tile("Weak Preferred","Score [1] in [Pref]", true, false, false, false),3);
-    addTiles(new Tile("Thriving Preferred","Score [2] in [Pref] if [Location] is *[Strength 1], ", true, false, false, false),3);
-    addTiles(new Tile("Anywhere but There", "Score [1] if [Location] is [Not] [Opposite]", true, false, false, false), 3);
-    addTiles(new Tile("Spacious", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 1);
+    addTilesNames(new Tile("Caladium", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Primrose","Fern","Stonecrop"]);
+    addTilesNames(new Tile("Sunflower", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3, ["Milkweed","English Ivy","Cactus"]);
+    addTilesNames(new Tile("Rosemary","Score [1] in [Pref]", true, false, false, false),3, ["Marigold", "Arrowhead", "Sage"]);
+    addTilesNames(new Tile("Thyme","Score [2] in [Pref] if [Location] is *[Strength 1], ", true, false, false, false),3, ["Mint", "Chinese Evergreen", "Dwarf Palm"]);
+    addTilesNames(new Tile("Latana", "Score [-1] if [Opposite], Score [+1] otherwise", true, false, false, false), 3, ["Lily", "Lungwort", "Iris"]);
 
     //Flowers: Hybrid Zone
-    addTiles(new Tile("Hybrid Flower", "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead", true, true, false, false), 3);
-    addTiles(new Tile("Varied Flower", "Score [2] in [Pref]", true, true, false, false), 3);
+    addTilesNames(new Tile("Cattail", "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead", true, true, false, false), 3, ["Calla Lily", "Succulent", "Yucca"]);
+    addTilesNames(new Tile("Forget-me-not", "Score [2] in [Either] [Pref]", true, true, false, false), 3, ["Orchid", "Hosta", "Lavender"]);
     
     //Flowers: Unique Effect
-    addTilesNames(new Tile("Dandelion", "Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
+    addTilesNames(new Tile("Dandelion", "Weeds*Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
     addTiles(new Tile("Mushroom Cluster", "Score [+1] per [Adjacent] Mushroom Cluster", false, false, false, false), 5);
+    addTilesNames(new Tile("Lemon Tree", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 3, ["Orange Tree", "Cherry Tree", "Fig Tree"]);
     
     //Devices:
     addTilesNames(new Tile("Grow Light", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Drainage Mat"]);
@@ -95,8 +95,8 @@ function makeTileDictionary(){
     addTiles(new Tile("Shovel", "Place covering [Flower] tile. This tile counts as [Empty]", false, false, false, false), 1);
     
     //Decorations:  
-    addTiles(new Tile("Decorative Rock", "Decor*If one [Adjacent] [Plant] has [Score 2+], Score [1]", false, false, false, false), 1);
-    addTiles(new Tile("Regional Decor", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3);
+    addTilesNames(new Tile("Statue", "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]", false, false, false, false), 3, ["Stone Arch","Garden Stones", "Decorative Stone"]);
+    addTilesNames(new Tile("Sundial", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3, ["Birdbath", "Garden Stools", "Birdhouse"]);
 }
 //update the player view
 function updateDeckIndicator(){
