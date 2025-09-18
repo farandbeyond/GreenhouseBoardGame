@@ -382,7 +382,8 @@ function setupNewGame(){
     });
 
     //setup the "board"
-    board.setTile(new Tile("Fountain", "Starting Position",true, true, true, true), 3, 3);
+    // board.setTile(new Tile("Fountain", "Starting Position",true, true, true, true), 3, 3);
+    board.setTile(new BlankTile(), 3, 3);
 
     //do the inital draw
     board.draw(boardCanvas);

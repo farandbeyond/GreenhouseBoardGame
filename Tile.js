@@ -138,3 +138,20 @@ class Tile{
     }
 }
 
+class BlankTile{
+    BlankTile(){
+
+    }
+    draw(canvas, tileX, tileY){
+        var ctx = canvas.getContext("2d");
+        ctx.strokeStyle = "black";
+
+        //switch from Grid measurements to Canvas measurements
+        var positionX = tileX * squareSize;
+        var positionY = tileY * squareSize;
+
+        //draw in the border of the tile
+        ctx.strokeRect(positionX, positionY, squareSize, squareSize);
+        return;
+    }
+}
