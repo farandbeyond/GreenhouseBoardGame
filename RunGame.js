@@ -17,7 +17,8 @@ var objectiveDict = [];
 //Decks
 var tileDeck = [];
 var objectiveDeck = [];
-var activeObjectives = [];
+
+var activeObjectiveToggles = [];
 
 //control variables
 var safeMode = true;
@@ -102,6 +103,7 @@ function makeTileDictionary(){
     addTilesNames(new Tile("Sundial", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3, ["Birdbath", "Garden Stools", "Birdhouse"]);
 }
 function makeObjectiveDictionary(){
+    //declare the objective cards (they only need to be strings)
     objectiveDict = [
         "(1) Have 8+ Plants in Shade areas",
         "(2) Have 8+ Plants in Sun areas",
@@ -120,13 +122,16 @@ function makeObjectiveDictionary(){
         "(15) Have a device remove 2+ Strength from its opposing zone",
         "(16) Have a tile placed in each corner"
     ];
+    //find the html object that will hold toggles for the objective cards
     var objectiveCardHolder = document.getElementById("objectiveCardHolder");
     for(var i = 0; i < objectiveDict.length; i++){
-        activeObjectives[i] = true;
+        //for each objective, set it to be active
+        
 
-        // var div = document.createElement("div");
-        // div.id = "objective" + (i+1) + "Div";
-        // div.title = (i+1) + ": " + objectiveDict[i];
+        //and create a toggle button element, that is toggled on by default
+        var div = document.createElement("div");
+        div.id = "objective" + (i+1) + "Div";
+        div.title = (i+1) + ": " + objectiveDict[i];
 
         var toggle = document.createElement("input");
         toggle.id = "objective" + (i+1) + "Toggle";
@@ -134,19 +139,35 @@ function makeObjectiveDictionary(){
         toggle.title = objectiveDict[i];
         toggle.checked = true;
         toggle.number = i;        
-        toggle.addEventListener("change", e => {activeObjectives[e.target.number] = e.target.checked});
+        
 
         var title = document.createElement("label");
         title.for = "objective" + (i+1) + "Toggle";
         title.innerText = i + 1;
         title.title = objectiveDict[i]; 
 
-        // div.appendChild(title);
-        // div.appendChild(toggle);
-        // objectiveCardHolder.appendChild(div);
+        //then, if we click the div, or the checkbox, enable or disable the objective card for this round.
+        div.addEventListener("click", e => {
+            var checkbox;
+            if(e.target.children.length == 0){
+                checkbox = e.target.parentElement.children[1];
+            }else{
+                checkbox = e.target.children[1];
+            }
+            checkbox.checked = !checkbox.checked;
+            // activeObjectives[checkbox.number] = checkbox.checked;
+        });
+        // toggle.addEventListener("change", e => {activeObjectives[e.target.number] = e.target.checked});
 
-        objectiveCardHolder.appendChild(title);
-        objectiveCardHolder.appendChild(toggle);
+        div.appendChild(title);
+        div.appendChild(toggle);
+        
+        objectiveCardHolder.appendChild(div);
+
+        activeObjectiveToggles[i] = toggle;
+
+        // objectiveCardHolder.appendChild(title);
+        // objectiveCardHolder.appendChild(toggle);
     }
 }
 //update the player view
@@ -329,7 +350,7 @@ function setupNewGame(){
     //set up the objective cards
     objectiveDeck = [];
     for(var i = 0; i < objectiveDict.length; i++){
-        if(activeObjectives[i]){
+        if(activeObjectiveToggles[i].checked){
             objectiveDeck.push(objectiveDict[i]);
         }
     }
@@ -398,9 +419,16 @@ function main(){
     document.getElementById("3Game").onclick = (e => {numPlayers = 3; setupNewGame()});
     document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
 
+    document.getElementById("resetObjectiveCards").onclick = (e => {
+        for(var i=0;i<objectiveDict.length;i++) {
+            activeObjectiveToggles[i].checked = true;
+        }
+            
+    });
+
     //...and the checkboxes
     document.getElementById("safeModeCheck").onchange = (e => safeMode = e.target.checked);
-    document.getElementById("hideBonusCards").onchange = (e => {
+    document.getElementById("hideObjectiveCards").onchange = (e => {
         handCanvases.forEach(canvas => {
             if(e.target.checked){
                 canvas.title = "";
