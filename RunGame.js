@@ -108,10 +108,10 @@ function makeTileDictionary(){
 function makeObjectiveDictionary(){
     //declare the objective cards (they only need to be strings)
     objectiveDict = [
-        "(1) Have 8+ Plants in Shade areas",
-        "(2) Have 8+ Plants in Sun areas",
-        "(3) Have 8+ Plants in Damp areas",
-        "(4) Have 8+ Plants in Dry areas",
+        "(1) Have 8+ Plants (of any preference) in Shade areas",
+        "(2) Have 8+ Plants (of any preference) in Sun areas",
+        "(3) Have 8+ Plants (of any preference) in Damp areas",
+        "(4) Have 8+ Plants (of any preference) in Dry areas",
         "(5) Attain a total Greenhouse score of 35 or more",
         "(6) Attain a total Greenhouse score of 21 or less",
         "(7) Have 6+ Plants with a negative score",
@@ -332,11 +332,6 @@ function setupNewGame(){
     handCanvases = [];
     for(var i = 0; i < numPlayers; i++){
         //make the Canvas Element
-        // if(document.getElementById("hand"+i) != null){
-        //     document.getElementById("hand"+i).remove();
-        //     console.log("Delet!");
-        // }
-        // //<canvas id="hand" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas>
         var thisHand = document.createElement("canvas");
         thisHand.name = "hand" + i;
         thisHand.id = "hand" + i;
@@ -356,6 +351,8 @@ function setupNewGame(){
 
     //setup the "deck" and the "hand"
     tileDeck = [...tileDict];
+    tileDeck.forEach(tile => {tile.scoreNote = 0});
+
     Shuffle(tileDeck);
     for(var i = 0; i<handSize;i++){
         hands.forEach(hand => hand.setTile(tileDeck.shift(), i, 0));
