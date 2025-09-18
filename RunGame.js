@@ -40,6 +40,7 @@ var turnIndicator;
 var boardIndicator;
 var scoreIndicator;
 
+//helper functions
 function Shuffle(array){
     let currentIndex = array.length;
 
@@ -54,8 +55,7 @@ function Shuffle(array){
     }
 }
 
-
-//Add tiles to the global tile dictionary
+//Add entries to the global tile dictionary
 function addTile(tile){
     tileDict.push(tile);
 }
@@ -275,9 +275,7 @@ function placeTile(hand){
     updateBoardIndicator();
 }
 
-function setupObjectiveCards(){
-
-}
+//game functions
 function setupNewGame(){
     //setup Board and Hand
     board = new Board(7,7);
@@ -370,7 +368,6 @@ function setupNewGame(){
     // board.setTile(tileDict[8], 5, 6);
     // board.setTile(tileDict[12], 4, 6);
 }
-
 function passTurn(){
     if(turnPlayer != -1){
         handCanvases[turnPlayer].style = "float: left; border: 1px solid #000000; margin: 1em;";
@@ -389,7 +386,7 @@ function main(){
     boardIndicator = document.getElementById("boardIndicator");
     scoreIndicator = document.getElementById("scoreIndicator");
     
-    //make the predefined tiles
+    //make the predefined tiles and cards
     makeTileDictionary();
     makeObjectiveDictionary();
 
@@ -401,6 +398,7 @@ function main(){
     document.getElementById("3Game").onclick = (e => {numPlayers = 3; setupNewGame()});
     document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
 
+    //...and the checkboxes
     document.getElementById("safeModeCheck").onchange = (e => safeMode = e.target.checked);
     document.getElementById("hideBonusCards").onchange = (e => {
         handCanvases.forEach(canvas => {
