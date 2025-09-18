@@ -49,11 +49,19 @@ class Board{
         ctx.strokeStyle = "black";
         ctx.fillStyle = "white";
 
+        var canvasHeight = canvas.height;
+        var canvasWidth = canvas.width;
+
         //draw in the border of the tile
         // ctx.fillRect(0, 0, canvasWidth, canvasHeight);
-        ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
+        
 
-        ctx.drawImage(boardImage, 0, 0, 700, 700);
+        if(this.drawBackground){
+            ctx.drawImage(boardImage, 0, 0, canvasWidth, canvasHeight);
+        }else{
+            ctx.strokeRect(0, 0, canvasWidth, canvasHeight);
+        }
+        
 
         //for each tile in the Tiles array, draw it in its position
         //the tile knows how to Draw itself.
@@ -62,7 +70,9 @@ class Board{
                 this.drawTile(canvas, x, y);
             }
         }
+
         //fill colour for the four corners
+        //antiquated: background image does this better now.
         // if(this.drawBackground){
         //     ctx.globalAlpha = 0.5;
         //     ctx.beginPath();
