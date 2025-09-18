@@ -139,8 +139,14 @@ class Tile{
 }
 
 class BlankTile{
-    BlankTile(){
-
+    constructor(){
+        this.name = "";
+        this.text = "";
+        this.brightIcon = false;
+        this.dampIcon = false;
+        this.darkIcon = false;
+        this.dryIcon = false;
+        this.scoreNote = 0;
     }
     draw(canvas, tileX, tileY){
         var ctx = canvas.getContext("2d");
