@@ -41,16 +41,18 @@ class Tile{
             ctx.fillStyle = "yellow";
             ctx.fillRect(positionX+2, positionY+2, cornerSize, cornerSize);
         }
-        if(this.dampIcon){
-            ctx.fillStyle = "blue";
+        if(this.dryIcon){
+            
+            ctx.fillStyle = "orange";
             ctx.fillRect(positionX + squareSize - cornerSize-2, positionY+2, cornerSize, cornerSize);
         }
         if(this.darkIcon){
             ctx.fillStyle = "purple";
             ctx.fillRect(positionX + squareSize - cornerSize-2, positionY + squareSize - cornerSize-2, cornerSize, cornerSize);
         }
-        if(this.dryIcon){
-            ctx.fillStyle = "orange";
+        if(this.dampIcon){
+            
+            ctx.fillStyle = "blue";
             ctx.fillRect(positionX+2, positionY + squareSize - cornerSize-2, cornerSize, cornerSize);
         }
         

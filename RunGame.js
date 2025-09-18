@@ -180,7 +180,8 @@ function loadImage(url, rotation){
         img.style = `transform: rotate(${rotation % 360}deg)`;
     }
     img.addEventListener('load', e => {
-        console.log(e.src);
+        // console.log(e.src);
+        redrawAll();
     });
     return img;
 }
@@ -309,6 +310,12 @@ function placeTile(hand){
     updateDeckIndicator();
     updateBoardIndicator();
 }
+function redrawAll(){
+    board.draw(boardCanvas);
+    for(var i=0;i<hands.length;i++){
+        hands[i].draw(handCanvases[i]);
+    }
+}
 
 //game functions
 function setupNewGame(){
@@ -422,7 +429,7 @@ function main(){
     makeTileDictionary();
     makeObjectiveDictionary();
 
-    boardImage = loadImage("./assets/BoardBackground.png", 0);
+    boardImage = loadImage("./assets/BoardBackground2.png", 0);
     //setup a fresh gamestate
     setupNewGame();
 
