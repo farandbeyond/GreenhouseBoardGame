@@ -41,6 +41,9 @@ var turnIndicator;
 var boardIndicator;
 var scoreIndicator;
 
+//image library
+var boardImage;
+
 //helper functions
 function Shuffle(array){
     let currentIndex = array.length;
@@ -169,6 +172,17 @@ function makeObjectiveDictionary(){
         // objectiveCardHolder.appendChild(title);
         // objectiveCardHolder.appendChild(toggle);
     }
+}
+function loadImage(url, rotation){
+    var img = new Image();
+    img.src = url;
+    if(rotation > 0){
+        img.style = `transform: rotate(${rotation % 360}deg)`;
+    }
+    img.addEventListener('load', e => {
+        console.log(e.src);
+    });
+    return img;
 }
 //update the player view
 function updateDeckIndicator(){
@@ -411,6 +425,7 @@ function main(){
     makeTileDictionary();
     makeObjectiveDictionary();
 
+    boardImage = loadImage("./assets/BoardBackground.png", 0);
     //setup a fresh gamestate
     setupNewGame();
 
@@ -423,7 +438,6 @@ function main(){
         for(var i=0;i<objectiveDict.length;i++) {
             activeObjectiveToggles[i].checked = true;
         }
-            
     });
 
     //...and the checkboxes
