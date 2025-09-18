@@ -10,11 +10,14 @@ var canvasHeight = 700;
 var tileWidth = 7;
 var tileHeight = 7;
 
-//tile dictionary
+//dictionaries
 var tileDict = [];
+var objectiveDict = [];
 
-//tile Deck
+//Decks
 var tileDeck = [];
+var objectiveDeck = [];
+var activeObjectives = [];
 
 //control variables
 var safeMode = true;
@@ -97,6 +100,54 @@ function makeTileDictionary(){
     //Decorations:  
     addTilesNames(new Tile("Statue", "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]", false, false, false, false), 3, ["Stone Arch","Garden Stones", "Decorative Stone"]);
     addTilesNames(new Tile("Sundial", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3, ["Birdbath", "Garden Stools", "Birdhouse"]);
+}
+function makeObjectiveDictionary(){
+    objectiveDict = [
+        "(1) Have 8+ Plants in Shade areas",
+        "(2) Have 8+ Plants in Sun areas",
+        "(3) Have 8+ Plants in Damp areas",
+        "(4) Have 8+ Plants in Dry areas",
+        "(5) Attain a total Greenhouse score of 35 or more",
+        "(6) Attain a total Greenhouse score of 21 or less",
+        "(7) Have 6+ Plants with a negative score",
+        "(8) Have 4+ Plants with a +3 or greater score",
+        "(9) Have a single Mushroom Cluster score 2+ points",
+        "(10) Have a Plant with no preferred zone score 0 points",
+        "(11) Have 12+ Plants in (one or more of) their preferred zone(s)",
+        "(12) Have a Decoration score 3+",
+        "(13) Have 2+ Plants without a preferred zone in a Strength 3+ tile",
+        "(14) Have a device add 2+ Strength to its preferred zone",
+        "(15) Have a device remove 2+ Strength from its opposing zone",
+        "(16) Have a tile placed in each corner"
+    ];
+    var objectiveCardHolder = document.getElementById("objectiveCardHolder");
+    for(var i = 0; i < objectiveDict.length; i++){
+        activeObjectives[i] = true;
+
+        // var div = document.createElement("div");
+        // div.id = "objective" + (i+1) + "Div";
+        // div.title = (i+1) + ": " + objectiveDict[i];
+
+        var toggle = document.createElement("input");
+        toggle.id = "objective" + (i+1) + "Toggle";
+        toggle.type = "checkbox";
+        toggle.title = objectiveDict[i];
+        toggle.checked = true;
+        toggle.number = i;        
+        toggle.addEventListener("change", e => {activeObjectives[e.target.number] = e.target.checked});
+
+        var title = document.createElement("label");
+        title.for = "objective" + (i+1) + "Toggle";
+        title.innerText = i + 1;
+        title.title = objectiveDict[i]; 
+
+        // div.appendChild(title);
+        // div.appendChild(toggle);
+        // objectiveCardHolder.appendChild(div);
+
+        objectiveCardHolder.appendChild(title);
+        objectiveCardHolder.appendChild(toggle);
+    }
 }
 //update the player view
 function updateDeckIndicator(){
@@ -224,6 +275,9 @@ function placeTile(hand){
     updateBoardIndicator();
 }
 
+function setupObjectiveCards(){
+
+}
 function setupNewGame(){
     //setup Board and Hand
     board = new Board(7,7);
@@ -274,6 +328,22 @@ function setupNewGame(){
         hands.forEach(hand => hand.setTile(tileDeck.shift(), i, 0));
     }
 
+    //set up the objective cards
+    objectiveDeck = [];
+    for(var i = 0; i < objectiveDict.length; i++){
+        if(activeObjectives[i]){
+            objectiveDeck.push(objectiveDict[i]);
+        }
+    }
+    Shuffle(objectiveDeck);
+    handCanvases.forEach(canvas => {
+        canvas.title = "Objectives Are: \n"
+        canvas.title += "1 - " + objectiveDeck.pop() + "\n";
+        canvas.title += "2 - " + objectiveDeck.pop() + "\n";
+
+        canvas.objectiveText = canvas.title;
+    });
+
     //setup the "board"
     board.setTile(new Tile("Fountain", "Starting Position",true, true, true, true), 3, 3);
 
@@ -283,6 +353,7 @@ function setupNewGame(){
         hands[i].draw(handCanvases[i]);
     }
 
+    //set up the variables to display to the player
     tilesPlaced = 0;
     turnPlayer = -1;
     passTurn();
@@ -299,6 +370,7 @@ function setupNewGame(){
     // board.setTile(tileDict[8], 5, 6);
     // board.setTile(tileDict[12], 4, 6);
 }
+
 function passTurn(){
     if(turnPlayer != -1){
         handCanvases[turnPlayer].style = "float: left; border: 1px solid #000000; margin: 1em;";
@@ -319,6 +391,7 @@ function main(){
     
     //make the predefined tiles
     makeTileDictionary();
+    makeObjectiveDictionary();
 
     //setup a fresh gamestate
     setupNewGame();
@@ -329,6 +402,15 @@ function main(){
     document.getElementById("4Game").onclick = (e => {numPlayers = 4; setupNewGame()});
 
     document.getElementById("safeModeCheck").onchange = (e => safeMode = e.target.checked);
+    document.getElementById("hideBonusCards").onchange = (e => {
+        handCanvases.forEach(canvas => {
+            if(e.target.checked){
+                canvas.title = "";
+            }else{
+                canvas.title = canvas.objectiveText;
+            }
+        });
+    });
     // safeMode = document.getElementById("safeModeCheck").checked;
 
     //draw everything for the first time

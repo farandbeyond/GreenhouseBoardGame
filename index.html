@@ -6,6 +6,13 @@
 
         <label for="safeModeCheck">Safe Mode?</label>
         <input id="safeModeCheck" type="checkbox" checked>
+
+        <label for="hideBonusCards">Hide Bonus Cards on Hover?</label>
+        <input id="hideBonusCards" type="checkbox">
+        <div id="objectiveCardHolder">
+            <p>Active Bonus Cards:</p>
+        </div>
+
         <link rel="stylesheet" href="main.css">
     </header>
     <body>
@@ -18,6 +25,7 @@
 
                 <p id="boardIndicator">X Tiles Placed</p>
                 <p id="scoreIndicator">Total (Marked) Score: XX</p>
+                <p id="objectiveInformer">Objective Cards: Hover your Hand</p>
             </div>
             <div id="hands"></div>
             <!-- <canvas id="hand0" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas> -->
