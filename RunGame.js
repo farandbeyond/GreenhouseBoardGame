@@ -129,8 +129,6 @@ function makeObjectiveDictionary(){
     var objectiveCardHolder = document.getElementById("objectiveCardHolder");
     for(var i = 0; i < objectiveDict.length; i++){
         //for each objective, set it to be active
-        
-
         //and create a toggle button element, that is toggled on by default
         var div = document.createElement("div");
         div.id = "objective" + (i+1) + "Div";
@@ -142,7 +140,6 @@ function makeObjectiveDictionary(){
         toggle.title = objectiveDict[i];
         toggle.checked = true;
         toggle.number = i;        
-        
 
         var title = document.createElement("label");
         title.for = "objective" + (i+1) + "Toggle";
