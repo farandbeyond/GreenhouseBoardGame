@@ -97,7 +97,7 @@ function makeTileDictionary(){
     addTilesNames(new Tile("Lemon Tree", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 3, ["Orange Tree", "Cherry Tree", "Fig Tree"]);
     
     //Devices:
-    addTilesNames(new Tile("Grow Light", "[Device]*Score [-1]. [Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Drainage Mat"]);
+    addTilesNames(new Tile("Grow Light", "[Device]*[Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Drainage Mat"]);
     addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
     addTiles(new Tile("Shovel", "Place covering [Flower] tile. This tile counts as [Empty]", false, false, false, false), 1);
     
@@ -108,21 +108,21 @@ function makeTileDictionary(){
 function makeObjectiveDictionary(){
     //declare the objective cards (they only need to be strings)
     objectiveDict = [
-        "(1) Have 8+ Plants (of any preference) in Shade areas",
-        "(2) Have 8+ Plants (of any preference) in Sun areas",
-        "(3) Have 8+ Plants (of any preference) in Damp areas",
-        "(4) Have 8+ Plants (of any preference) in Dry areas",
-        "(5) Attain a total Greenhouse score of 35 or more",
-        "(6) Attain a total Greenhouse score of 21 or less",
-        "(7) Have 6+ Plants with a negative score",
-        "(8) Have 4+ Plants with a +3 or greater score",
-        "(9) Have a single Mushroom Cluster score 2+ points",
-        "(10) Have a Plant with no preferred zone score 0 points",
-        "(11) Have 12+ Plants in (one or more of) their preferred zone(s)",
-        "(12) Have a Decoration score 3+",
-        "(13) Have 2+ Plants without a preferred zone in a Strength 3+ tile",
-        "(14) Have a device add 2+ Strength to its preferred zone",
-        "(15) Have a device remove 2+ Strength from its opposing zone",
+        "(1) Have 8+ Plants (of any preference) in Shade Zones",
+        "(2) Have 8+ Plants (of any preference) in Sun Zones",
+        "(3) Have 8+ Plants (of any preference) in Damp Zones",
+        "(4) Have 8+ Plants (of any preference) in Dry Zones",
+        "(5) Have 8+ Plants (of any preference) in Hybrid Zones",
+        "(6) Attain a total Greenhouse score of 35 or more",
+        "(7) Attain a total Greenhouse score of 21 or less",
+        "(8) Have 6+ Plants with a negative score",
+        "(9) Have 4+ Plants with a +3 or greater score",
+        "(10) Have a single Mushroom Cluster score 2+ points",
+        "(11) Have a Plant with no preferred zone score 0 points",
+        "(12) Have 12+ Plants in (one or more of) their preferred zone(s)",
+        "(13) Have a Decoration score 3+",
+        "(14) Have 2+ Plants without a preferred zone in a Strength 3+ tile",
+        "(15) Each other player attains an objective this round",
         "(16) Have a tile placed in each corner"
     ];
     //find the html object that will hold toggles for the objective cards
