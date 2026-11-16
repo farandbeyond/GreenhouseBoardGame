@@ -3,25 +3,52 @@ body{
 }
 #board{
     float: left; 
+    /* display: inline-block; */
     border: 1px solid #000000;
 }
 #gameState{
-    max-width: 500px; 
-    height: 100px; 
-    display: inline; 
-    float: left; 
+    max-width: 1000px; 
+    min-width: 600px;
+    height: 300px; 
+    display: inline-block; 
+    /* float: left;  */
     border: 1px solid #000000; 
     margin: 1em;
 }
+
 #gameState p{
-    float: left; 
+    /* display: inline; */
+    /* float: left;  */
     margin: 1em;
 }
-#hands canvas{
+
+#gameState img{
+    display: inline;
+    float: right; 
+}
+
+/* #hands canvas{
     color: gray;
-    float: left; 
+    float: left;  
     border: 1px solid #000000; 
     margin: 1em;
+} */
+#handCombo{
+    /* display: inline; */
+    float: left;
+}
+#handCombo input{
+    display: block;
+}
+#handCombo canvas{
+    display: block;
+    border: 1px solid #000000; 
+    margin: 1em;
+}
+
+.tileImg{
+    width: 300px;
+    height: 300px;
 }
 
 #objectiveCardHolder{

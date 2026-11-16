@@ -34,6 +34,7 @@ var tilesPlaced = 0;
 var handSize = 5;
 var hands = [];
 var handCanvases = [];
+var names = [];
 
 //global access: player indicators
 var deckIndicator;
@@ -187,7 +188,11 @@ function updateDeckIndicator(){
     deckIndicator.innerText = "Remaining Tiles: "+tileDeck.length;
 }
 function updateTurnIndicator(){
-    turnIndicator.innerText = "Player "+(turnPlayer+1)+"'s turn";
+    if(names[turnPlayer].value != ""){
+        turnIndicator.innerText = names[turnPlayer].value+"'s turn";
+    }else{
+        turnIndicator.innerText = "Player "+(turnPlayer+1)+"'s turn";
+    }
 }
 function updateBoardIndicator(){
     boardIndicator.innerText = tilesPlaced+" tiles Placed";
@@ -332,8 +337,11 @@ function setupNewGame(){
     handCanvases.forEach(e => {
         e.remove();
     });
+    names.forEach(e => {e.remove();});
+
     hands = [];
     handCanvases = [];
+    names = [];
     for(var i = 0; i < numPlayers; i++){
         //make the Canvas Element
         var thisHand = document.createElement("canvas");
@@ -344,8 +352,21 @@ function setupNewGame(){
         thisHand.style = "";
         thisHand.number = i;
         thisHand.onclick = onClickHand;
+
+        //make the player name field
+        var thisPlayersName = document.createElement("Input");
+        thisPlayersName.type="text";
+        thisPlayersName.addEventListener("change", e => updateTurnIndicator());
+        names[i] = thisPlayersName;
+
+        var handCombo = document.createElement("div");
+        // handCombo.class = "handCombo";
+        handCombo.id = "handCombo";
+        handCombo.append(thisPlayersName);
+        handCombo.append(thisHand);
+
         //add it to the main, at the end
-        document.getElementById("hands").append(thisHand);
+        document.getElementById("hands").append(handCombo);
 
         //record the canvas, and make the board
         handCanvases[i] = thisHand;
