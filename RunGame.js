@@ -82,7 +82,7 @@ function addTilesNames(tile, rotations, namesArr){
 }
 function makeTileDictionary(){
     //Flowers: Single Zone
-    addTilesNames(new Tile("Caladium", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Primrose","Fern","Stonecrop"]);
+    addTilesNames(new Tile("Caladium", "Score [Strength] in [Pref]", true, false, false, false, "assets/tile/1_ZoneIntensity/"), 3, ["Primrose","Fern","Stonecrop"]);
     addTilesNames(new Tile("Sunflower", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3, ["Milkweed","English Ivy","Cactus"]);
     addTilesNames(new Tile("Rosemary","Score [1] in [Pref]", true, false, false, false),3, ["Marigold", "Arrowhead", "Sage"]);
     addTilesNames(new Tile("Thyme","Score [2] in [Pref] if [Location] is *[Strength 1], ", true, false, false, false),3, ["Mint", "Chinese Evergreen", "Dwarf Palm"]);
@@ -220,6 +220,11 @@ function onClickHand(event){
     }else{
         //otherwise, hilight that tile
         hands[index].hilight(tileX, tileY);
+        var tile = hands[index].getTileHilighted();
+        if(tile){
+            document.getElementById("tileImg").src = tile.fullImgPath;
+            console.log("Here");
+        }
     }
 
     //check2: if we hilighted the board and a hand, place the tile from the hand onto the board.
@@ -260,6 +265,11 @@ function onClickBoard(event){
         }else{
             //otherwise, hilight that tile
             board.hilight(tileX, tileY);
+            var tile = board.getTileHilighted();
+            if(tile){
+                document.getElementById("tileImg").src = tile.fullImgPath;
+                console.log("Here");
+            }
         }
 
         //check2: if we have a hilighted tile in hand, try to place it on the board
