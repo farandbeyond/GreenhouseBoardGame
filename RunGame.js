@@ -82,11 +82,38 @@ function addTilesNames(tile, rotations, namesArr){
 }
 function makeTileDictionary(){
     //Flowers: Single Zone
-    addTilesNames(new Tile("Caladium", "Score [Strength] in [Pref]", true, false, false, false, "assets/tile/1_ZoneIntensity/"), 3, ["Primrose","Fern","Stonecrop"]);
-    addTilesNames(new Tile("Sunflower", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3, ["Milkweed","English Ivy","Cactus"]);
-    addTilesNames(new Tile("Rosemary","Score [1] in [Pref]", true, false, false, false),3, ["Marigold", "Arrowhead", "Sage"]);
-    addTilesNames(new Tile("Thyme","Score [2] in [Pref] if [Location] is *[Strength 1], ", true, false, false, false),3, ["Mint", "Chinese Evergreen", "Dwarf Palm"]);
-    addTilesNames(new Tile("Latana", "Score [-1] if [Opposite], Score [+1] otherwise", true, false, false, false), 3, ["Lily", "Lungwort", "Iris"]);
+    var names = [];
+    var desc = "";
+    var folderPath = "";
+    var sun = true;
+    var damp = false;
+    var shade = false;
+    var dry = false;
+
+    names = ["Caladium", "Primrose", "Fern", "Stonecrop"];
+    desc = "Score [Strength] in [Pref]";
+    folderPath = "assets/tile/1_ZoneIntensity/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Sunflower", "Milkweed", "English Ivy", "Cactus"];
+    desc = "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else";
+    folderPath = "assets/tile/2_2Intensity2/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Rosemary", "Marigold", "Arrowhead", "Sage"];
+    desc = "Score [1] in [Pref]";
+    folderPath = "assets/tile/3_1Anywhere/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Thyme", "Mint", "Chinese Evergreen", "Dwarf Palm"];
+    desc = "Score [2] in [Pref] if [Location] is *[Strength 1]";
+    folderPath = "assets/tile/2_2Intensity2/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Latana", "Lily", "Lungwort", "Iris"];
+    desc = "Score [-1] if [Opposite], Score [+1] otherwise";
+    folderPath = "assets/tile/2_2Intensity2/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
 
     //Flowers: Hybrid Zone
     addTilesNames(new Tile("Cattail", "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead", true, true, false, false), 3, ["Calla Lily", "Succulent", "Yucca"]);
