@@ -14,18 +14,21 @@ class Tile{
         this.darkIcon = darkIcon;
         this.dryIcon = dryIcon;
         this.scoreNote = 0;
-
-        this.imgPath = imgPath;
-        this.fullImgPath = imgPath;
-        if(brightIcon) this.fullImgPath += "Sun";
-        if(dampIcon) this.fullImgPath += "Damp";
-        if(darkIcon) this.fullImgPath += "Dark";
-        if(dryIcon) this.fullImgPath += "Dry";
-        if(!brightIcon && !dampIcon && !darkIcon && !dryIcon) this.fullImgPath += name;
-        this.fullImgPath += ".png";
+        this.updateImgPath(imgPath);
     }
     get tileName(){
         return this.name;
+    }
+
+    updateImgPath(imgPath){
+        this.imgPath = imgPath;
+        this.fullImgPath = imgPath;
+        if(this.brightIcon) this.fullImgPath += "Sun";
+        if(this.darkIcon) this.fullImgPath += "Shade";
+        if(this.dampIcon) this.fullImgPath += "Damp";
+        if(this.dryIcon) this.fullImgPath += "Dry";
+        if(!this.brightIcon && !this.dampIcon && !this.darkIcon && !this.dryIcon) this.fullImgPath += this.name;
+        this.fullImgPath += ".png";
     }
 
     draw(canvas, tileX, tileY){

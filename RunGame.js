@@ -77,6 +77,7 @@ function addTilesNames(tile, rotations, namesArr){
     for(var i=0;i<rotations;i++){
         tile = tile.rotated;
         tile.name = namesArr[i];
+        tile.updateImgPath(tile.imgPath);
         addTile(tile);
     }
 }
@@ -107,20 +108,40 @@ function makeTileDictionary(){
 
     names = ["Thyme", "Mint", "Chinese Evergreen", "Dwarf Palm"];
     desc = "Score [2] in [Pref] if [Location] is *[Strength 1]";
-    folderPath = "assets/tile/2_2Intensity2/";
+    folderPath = "assets/tile/4_2InStrength1/";
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
 
     names = ["Latana", "Lily", "Lungwort", "Iris"];
     desc = "Score [-1] if [Opposite], Score [+1] otherwise";
-    folderPath = "assets/tile/2_2Intensity2/";
+    folderPath = "assets/tile/5_1InNotOpposite/";
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
 
     //Flowers: Hybrid Zone
-    addTilesNames(new Tile("Cattail", "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead", true, true, false, false), 3, ["Calla Lily", "Succulent", "Yucca"]);
-    addTilesNames(new Tile("Forget-me-not", "Score [2] in [Either] [Pref]", true, true, false, false), 3, ["Orchid", "Hosta", "Lavender"]);
+    sun = true;
+    damp = true;
+    shade = false;
+    dry = false;
+
+    names = ["Cattail", "Calla Lily", "Succulent", "Yucca"];
+    desc = "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead";
+    folderPath = "assets/tile/6_Hybrid3/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+    
+    names = ["Forget-me-not", "Orchid", "Hosta", "Lavender"];
+    desc = "Score [2] in [Either] [Pref]";
+    folderPath = "assets/tile/7_Hybrid2Any/";    
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
     
     //Flowers: Unique Effect
-    addTilesNames(new Tile("Dandelion", "Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
+    sun = false;
+    damp = false;
+    shade = false;
+    dry = false;
+
+    names = ["Dandelion", "Knotweed", "Hogweed", "Poison Ivy"];
+    desc = "Score [-2]";
+    folderPath = "assets/tile/8_Weeds/";    
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
     addTiles(new Tile("Mushroom Cluster", "Score [+1] per [Adjacent] Mushroom Cluster", false, false, false, false), 5);
     addTilesNames(new Tile("Lemon Tree", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 3, ["Orange Tree", "Cherry Tree", "Fig Tree"]);
     
@@ -250,7 +271,6 @@ function onClickHand(event){
         var tile = hands[index].getTileHilighted();
         if(tile){
             document.getElementById("tileImg").src = tile.fullImgPath;
-            console.log("Here");
         }
     }
 
@@ -295,7 +315,6 @@ function onClickBoard(event){
             var tile = board.getTileHilighted();
             if(tile){
                 document.getElementById("tileImg").src = tile.fullImgPath;
-                console.log("Here");
             }
         }
 
