@@ -166,7 +166,7 @@ function makeTileDictionary(){
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
 
     //Decorations Non-Zonal:  
-    names = ["Gnomer", "Gnomeo", "Gnomura", "Gnomie"];
+    names = ["Gnomer", "Gnomeo", "Gnomura", "Gnomenclature"];
     desc = "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]";
     folderPath = "assets/tile/12_PerAdjacentPlant/";   
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
@@ -417,6 +417,7 @@ function setupNewGame(){
     // handCanvas.onclick = onClickHand;
 
     //get a number of hands, equal to the number of selected players
+    document.getElementById("hands").childNodes.forEach(e => e.remove());
     handCanvases.forEach(e => {
         e.remove();
     });
@@ -558,6 +559,7 @@ function main(){
         });
     });
     // safeMode = document.getElementById("safeModeCheck").checked;
+    document.getElementById("rulebookButton").onclick = (e => {window.open("assets/Instruction Manual - v2 - Topsoil Turmoil.pdf", "_blank")});
 
     //draw everything for the first time
     board.draw(boardCanvas);
