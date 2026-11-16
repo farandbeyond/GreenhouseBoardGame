@@ -82,7 +82,7 @@ function addTilesNames(tile, rotations, namesArr){
     }
 }
 function makeTileDictionary(){
-    //Flowers: Single Zone
+    //Flowers: Zonal
     var names = [];
     var desc = "";
     var folderPath = "";
@@ -116,7 +116,19 @@ function makeTileDictionary(){
     folderPath = "assets/tile/5_1InNotOpposite/";
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
 
-    //Flowers: Hybrid Zone
+    //Non-Flower Zonal
+    names = ["Grow Light", "Sprinkler", "Shadecloth", "Drainage Mat"];
+    desc = "[Device]*[Strength][+1] of [Pref] to [Adjacent]";
+    folderPath = "assets/tile/11_StrengthDevice/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Sundial", "Birdbath", "Garden Bench", "Birdhouse"];
+    desc = "Decor*Score [1] per [Adjacent][Plant] with same [Pref]";
+    folderPath = "assets/tile/13_PerZonal/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+    
+
+    //Flowers: Hybrid Zonal
     sun = true;
     damp = true;
     shade = false;
@@ -132,7 +144,7 @@ function makeTileDictionary(){
     folderPath = "assets/tile/7_Hybrid2Any/";    
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
     
-    //Flowers: Unique Effect
+    //Flowers: Non-Zonal
     sun = false;
     damp = false;
     shade = false;
@@ -142,17 +154,32 @@ function makeTileDictionary(){
     desc = "Score [-2]";
     folderPath = "assets/tile/8_Weeds/";    
     addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
-    addTiles(new Tile("Mushroom Cluster", "Score [+1] per [Adjacent] Mushroom Cluster", false, false, false, false), 5);
-    addTilesNames(new Tile("Lemon Tree", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 3, ["Orange Tree", "Cherry Tree", "Fig Tree"]);
+
+    names = ["Mushroom Cluster"];
+    desc = "Score [+1] per [Adjacent] Mushroom Cluster";
+    folderPath = "assets/tile/9_Mushrooms/";    
+    addTiles(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 5);
+
+    names = ["Lemon Tree", "Orange Tree", "Cherry Tree", "Fig Tree"];
+    desc = "Score [+1] per [Adjacent] [Empty]";
+    folderPath = "assets/tile/10_Trees/";   
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    //Decorations Non-Zonal:  
+    names = ["Gnomer", "Gnomeo", "Gnomura", "Gnomie"];
+    desc = "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]";
+    folderPath = "assets/tile/12_PerAdjacentPlant/";   
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
     
     //Devices:
-    addTilesNames(new Tile("Grow Light", "[Device]*[Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Drainage Mat"]);
-    addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
-    addTiles(new Tile("Shovel", "Place covering [Flower] tile. This tile counts as [Empty]", false, false, false, false), 1);
+    desc = "Device*Score [1] if [Adjacent] to [Fountain]";
+    folderPath = "assets/tile/";   
+    addTiles(new Tile("Dolly", desc, sun, damp, shade, dry, folderPath), 0);
+
+    desc = "Place covering [Flower] tile. This tile counts as [Empty]";
+    folderPath = "assets/tile/";   
+    addTiles(new Tile("Shovel", desc, sun, damp, shade, dry, folderPath), 1);
     
-    //Decorations:  
-    addTilesNames(new Tile("Statue", "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]", false, false, false, false), 3, ["Stone Arch","Garden Stones", "Decorative Stone"]);
-    addTilesNames(new Tile("Sundial", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3, ["Birdbath", "Garden Stools", "Birdhouse"]);
 }
 function makeObjectiveDictionary(){
     //declare the objective cards (they only need to be strings)
