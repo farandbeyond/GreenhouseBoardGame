@@ -34,6 +34,7 @@ var tilesPlaced = 0;
 var handSize = 5;
 var hands = [];
 var handCanvases = [];
+var names = [];
 
 //global access: player indicators
 var deckIndicator;
@@ -76,34 +77,109 @@ function addTilesNames(tile, rotations, namesArr){
     for(var i=0;i<rotations;i++){
         tile = tile.rotated;
         tile.name = namesArr[i];
+        tile.updateImgPath(tile.imgPath);
         addTile(tile);
     }
 }
 function makeTileDictionary(){
-    //Flowers: Single Zone
-    addTilesNames(new Tile("Caladium", "Score [Strength] in [Pref]", true, false, false, false), 3, ["Primrose","Fern","Stonecrop"]);
-    addTilesNames(new Tile("Sunflower", "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else", true, false, false, false), 3, ["Milkweed","English Ivy","Cactus"]);
-    addTilesNames(new Tile("Rosemary","Score [1] in [Pref]", true, false, false, false),3, ["Marigold", "Arrowhead", "Sage"]);
-    addTilesNames(new Tile("Thyme","Score [2] in [Pref] if [Location] is *[Strength 1], ", true, false, false, false),3, ["Mint", "Chinese Evergreen", "Dwarf Palm"]);
-    addTilesNames(new Tile("Latana", "Score [-1] if [Opposite], Score [+1] otherwise", true, false, false, false), 3, ["Lily", "Lungwort", "Iris"]);
+    //Flowers: Zonal
+    var names = [];
+    var desc = "";
+    var folderPath = "";
+    var sun = true;
+    var damp = false;
+    var shade = false;
+    var dry = false;
 
-    //Flowers: Hybrid Zone
-    addTilesNames(new Tile("Cattail", "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead", true, true, false, false), 3, ["Calla Lily", "Succulent", "Yucca"]);
-    addTilesNames(new Tile("Forget-me-not", "Score [2] in [Either] [Pref]", true, true, false, false), 3, ["Orchid", "Hosta", "Lavender"]);
+    names = ["Caladium", "Primrose", "Fern", "Stonecrop"];
+    desc = "Score [Strength] in [Pref]";
+    folderPath = "assets/tile/1_ZoneIntensity/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Sunflower", "Milkweed", "English Ivy", "Cactus"];
+    desc = "Score [2] in [Strength 2+] [Pref]. Score [-1] everywhere else";
+    folderPath = "assets/tile/2_2Intensity2/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Rosemary", "Marigold", "Arrowhead", "Sage"];
+    desc = "Score [1] in [Pref]";
+    folderPath = "assets/tile/3_1Anywhere/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Thyme", "Mint", "Chinese Evergreen", "Dwarf Palm"];
+    desc = "Score [2] in [Pref] if [Location] is *[Strength 1]";
+    folderPath = "assets/tile/4_2InStrength1/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Latana", "Lily", "Lungwort", "Iris"];
+    desc = "Score [-1] if [Opposite], Score [+1] otherwise";
+    folderPath = "assets/tile/5_1InNotOpposite/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    //Non-Flower Zonal
+    names = ["Grow Light", "Sprinkler", "Shadecloth", "Drainage Mat"];
+    desc = "[Device]*[Strength][+1] of [Pref] to [Adjacent]";
+    folderPath = "assets/tile/11_StrengthDevice/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Sundial", "Birdbath", "Garden Bench", "Birdhouse"];
+    desc = "Decor*Score [1] per [Adjacent][Plant] with same [Pref]";
+    folderPath = "assets/tile/13_PerZonal/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
     
-    //Flowers: Unique Effect
-    addTilesNames(new Tile("Dandelion", "Score [-2]", false, false, false, false), 3, ["Knotweed", "Hogweed", "Poison Ivy"]);
-    addTiles(new Tile("Mushroom Cluster", "Score [+1] per [Adjacent] Mushroom Cluster", false, false, false, false), 5);
-    addTilesNames(new Tile("Lemon Tree", "Score [+1] per [Adjacent] [Empty]", false, false, false, false), 3, ["Orange Tree", "Cherry Tree", "Fig Tree"]);
+
+    //Flowers: Hybrid Zonal
+    sun = true;
+    damp = true;
+    shade = false;
+    dry = false;
+
+    names = ["Cattail", "Calla Lily", "Succulent", "Yucca"];
+    desc = "Score [Strength] in [Pref]. If [Location] is [Both Pref], Score [3] instead";
+    folderPath = "assets/tile/6_Hybrid3/";
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+    
+    names = ["Forget-me-not", "Orchid", "Hosta", "Lavender"];
+    desc = "Score [2] in [Either] [Pref]";
+    folderPath = "assets/tile/7_Hybrid2Any/";    
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+    
+    //Flowers: Non-Zonal
+    sun = false;
+    damp = false;
+    shade = false;
+    dry = false;
+
+    names = ["Dandelion", "Knotweed", "Hogweed", "Poison Ivy"];
+    desc = "Score [-2]";
+    folderPath = "assets/tile/8_Weeds/";    
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    names = ["Mushroom Cluster"];
+    desc = "Score [+1] per [Adjacent] Mushroom Cluster";
+    folderPath = "assets/tile/9_Mushrooms/";    
+    addTiles(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 5);
+
+    names = ["Lemon Tree", "Orange Tree", "Cherry Tree", "Fig Tree"];
+    desc = "Score [+1] per [Adjacent] [Empty]";
+    folderPath = "assets/tile/10_Trees/";   
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
+
+    //Decorations Non-Zonal:  
+    names = ["Gnomer", "Gnomeo", "Gnomura", "Gnomenclature"];
+    desc = "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]";
+    folderPath = "assets/tile/12_PerAdjacentPlant/";   
+    addTilesNames(new Tile(names[0], desc, sun, damp, shade, dry, folderPath), 3, [names[1], names[2], names[3]]);
     
     //Devices:
-    addTilesNames(new Tile("Grow Light", "[Device]*[Strength][+1] of [Pref] to [Adjacent]", true, false, false, false), 3, ["Sprinkler","Shadecloth","Drainage Mat"]);
-    addTiles(new Tile("Dolly", "Device*Score [1] if [Adjacent] to [Fountain]", false, false, false, false), 0);
-    addTiles(new Tile("Shovel", "Place covering [Flower] tile. This tile counts as [Empty]", false, false, false, false), 1);
+    desc = "Device*Score [1] if [Adjacent] to [Fountain]";
+    folderPath = "assets/tile/";   
+    addTiles(new Tile("Dolly", desc, sun, damp, shade, dry, folderPath), 0);
+
+    desc = "Place covering [Flower] tile. This tile counts as [Empty]";
+    folderPath = "assets/tile/";   
+    addTiles(new Tile("Shovel", desc, sun, damp, shade, dry, folderPath), 1);
     
-    //Decorations:  
-    addTilesNames(new Tile("Statue", "Decor*For each [Adjacent] [Plant] with [Score 2+], Score [+1]", false, false, false, false), 3, ["Stone Arch","Garden Stones", "Decorative Stone"]);
-    addTilesNames(new Tile("Sundial", "Decor*Score [1] per [Adjacent][Plant] with same [Pref]", true, false, false, false), 3, ["Birdbath", "Garden Stools", "Birdhouse"]);
 }
 function makeObjectiveDictionary(){
     //declare the objective cards (they only need to be strings)
@@ -188,7 +264,11 @@ function updateDeckIndicator(){
     deckIndicator.innerText = "Remaining Tiles: "+tileDeck.length;
 }
 function updateTurnIndicator(){
-    turnIndicator.innerText = "Player "+(turnPlayer+1)+"'s turn";
+    if(names[turnPlayer].value != ""){
+        turnIndicator.innerText = names[turnPlayer].value+"'s turn";
+    }else{
+        turnIndicator.innerText = "Player "+(turnPlayer+1)+"'s turn";
+    }
 }
 function updateBoardIndicator(){
     boardIndicator.innerText = tilesPlaced+" tiles Placed";
@@ -216,6 +296,10 @@ function onClickHand(event){
     }else{
         //otherwise, hilight that tile
         hands[index].hilight(tileX, tileY);
+        var tile = hands[index].getTileHilighted();
+        if(tile){
+            document.getElementById("tileImg").src = tile.fullImgPath;
+        }
     }
 
     //check2: if we hilighted the board and a hand, place the tile from the hand onto the board.
@@ -256,6 +340,10 @@ function onClickBoard(event){
         }else{
             //otherwise, hilight that tile
             board.hilight(tileX, tileY);
+            var tile = board.getTileHilighted();
+            if(tile){
+                document.getElementById("tileImg").src = tile.fullImgPath;
+            }
         }
 
         //check2: if we have a hilighted tile in hand, try to place it on the board
@@ -330,11 +418,15 @@ function setupNewGame(){
     // handCanvas.onclick = onClickHand;
 
     //get a number of hands, equal to the number of selected players
+    document.getElementById("hands").childNodes.forEach(e => e.remove());
     handCanvases.forEach(e => {
         e.remove();
     });
+    names.forEach(e => {e.remove();});
+
     hands = [];
     handCanvases = [];
+    names = [];
     for(var i = 0; i < numPlayers; i++){
         //make the Canvas Element
         var thisHand = document.createElement("canvas");
@@ -345,8 +437,21 @@ function setupNewGame(){
         thisHand.style = "";
         thisHand.number = i;
         thisHand.onclick = onClickHand;
+
+        //make the player name field
+        var thisPlayersName = document.createElement("Input");
+        thisPlayersName.type="text";
+        thisPlayersName.addEventListener("change", e => updateTurnIndicator());
+        names[i] = thisPlayersName;
+
+        var handCombo = document.createElement("div");
+        // handCombo.class = "handCombo";
+        handCombo.id = "handCombo";
+        handCombo.append(thisPlayersName);
+        handCombo.append(thisHand);
+
         //add it to the main, at the end
-        document.getElementById("hands").append(thisHand);
+        document.getElementById("hands").append(handCombo);
 
         //record the canvas, and make the board
         handCanvases[i] = thisHand;
@@ -455,6 +560,7 @@ function main(){
         });
     });
     // safeMode = document.getElementById("safeModeCheck").checked;
+    document.getElementById("rulebookButton").onclick = (e => {window.open("assets/Instruction Manual - v2 - Topsoil Turmoil.pdf", "_blank")});
 
     //draw everything for the first time
     board.draw(boardCanvas);

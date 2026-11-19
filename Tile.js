@@ -6,7 +6,7 @@ var fontRowLength = 25;
 
 class Tile{
     // scoreNote;
-    constructor(name, text, brightIcon, dampIcon, darkIcon, dryIcon){
+    constructor(name, text, brightIcon, dampIcon, darkIcon, dryIcon, imgPath){
         this.name = name;
         this.text = text;
         this.brightIcon = brightIcon;
@@ -14,9 +14,21 @@ class Tile{
         this.darkIcon = darkIcon;
         this.dryIcon = dryIcon;
         this.scoreNote = 0;
+        this.updateImgPath(imgPath);
     }
     get tileName(){
         return this.name;
+    }
+
+    updateImgPath(imgPath){
+        this.imgPath = imgPath;
+        this.fullImgPath = imgPath;
+        if(this.brightIcon) this.fullImgPath += "Sun";
+        if(this.darkIcon) this.fullImgPath += "Shade";
+        if(this.dampIcon) this.fullImgPath += "Damp";
+        if(this.dryIcon) this.fullImgPath += "Dry";
+        if(!this.brightIcon && !this.dampIcon && !this.darkIcon && !this.dryIcon) this.fullImgPath += this.name;
+        this.fullImgPath += ".png";
     }
 
     draw(canvas, tileX, tileY){
@@ -118,7 +130,7 @@ class Tile{
         }
     }
     get rotated(){
-        return new Tile(this.name, this.text, this.dryIcon, this.brightIcon, this.dampIcon, this.darkIcon);
+        return new Tile(this.name, this.text, this.dryIcon, this.brightIcon, this.dampIcon, this.darkIcon, this.imgPath);
     }
     get myBackgroundColor(){
         var totalColors = this.brightIcon + this.dampIcon + this.darkIcon + this.dryIcon;
@@ -147,6 +159,7 @@ class BlankTile{
         this.darkIcon = false;
         this.dryIcon = false;
         this.scoreNote = 0;
+        this.imgPath = "";
     }
     draw(canvas, tileX, tileY){
         var ctx = canvas.getContext("2d");
