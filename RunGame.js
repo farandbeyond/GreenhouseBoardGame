@@ -126,23 +126,24 @@ function makeObjectiveDictionary(){
         "(16) Have a tile placed in each corner"
     ];
     //find the html object that will hold toggles for the objective cards
-    var objectiveCardHolder = document.getElementById("objectiveCardHolder");
+    var objectiveCardHolder = document.getElementById("objective-cards");
     for(var i = 0; i < objectiveDict.length; i++){
         //for each objective, set it to be active
         //and create a toggle button element, that is toggled on by default
         var div = document.createElement("div");
-        div.id = "objective" + (i+1) + "Div";
-        div.title = (i+1) + ": " + objectiveDict[i];
+        div.id = `objective${i+1}Div`;
+        div.title = `${(i+1)}: ${objectiveDict[i]}`;
+        div.classList += "card-div";
 
         var toggle = document.createElement("input");
-        toggle.id = "objective" + (i+1) + "Toggle";
+        toggle.id = `objective${i+1}Toggle`;
         toggle.type = "checkbox";
         toggle.title = objectiveDict[i];
         toggle.checked = true;
         toggle.number = i;        
 
         var title = document.createElement("label");
-        title.for = "objective" + (i+1) + "Toggle";
+        title.for = `objective{i+1}Toggle`;
         title.innerText = i + 1;
         title.title = objectiveDict[i]; 
 

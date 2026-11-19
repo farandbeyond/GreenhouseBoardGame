@@ -24,16 +24,45 @@ body{
     margin: 1em;
 }
 
-#objectiveCardHolder{
-    display: flex;
-    /* justify-content: space-between; */
-    /* max-width: 50%; */
-    /* table-layout: fixed; */
-}
-#objectiveCardHolder div{
+#objective-cards .card-div{
     border: 1px solid black;
     background-color: palegreen;
     display: inline;
-    min-width: 2.5em;
+    /* min-width: 2.5em; */
+    min-height: 2em;
     /* float: right; */
+}
+
+.control-box{
+    display: inline-flex;
+    width: 95%;
+    margin: 15px;
+    padding: 5px;
+    border: 5px solid black;
+}
+.control-box .control-group{
+    /* display: block; */
+    width: 20%;
+    height: 100%;
+}
+#objective-cards{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20%;
+}
+
+#gameStart button{
+    width: 95%;
+    height: auto;
+    margin: 2.5%;
+    padding: 2.5%;
+}
+
+#modal-controls{
+    display: block;
+}
+#modal-controls div{
+    width: 95%;
+    height: auto;
+    margin: 2.5%;
+    padding: 2.5%;
 }
