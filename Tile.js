@@ -135,10 +135,10 @@ class Tile{
     get myBackgroundColor(){
         var totalColors = this.brightIcon + this.dampIcon + this.darkIcon + this.dryIcon;
         if(totalColors == 1){
-            if(this.brightIcon) return "rgb(160 122   0)";
-            if(this.dampIcon)   return "rgb(  0  50 122)";;
-            if(this.darkIcon)   return "rgb(160  60  81)";
-            if(this.dryIcon)    return "rgb(122  61   0)";
+            if(this.brightIcon) return "rgb(200, 153, 0)";
+            if(this.dampIcon)   return "rgb(0, 106, 255)";;
+            if(this.darkIcon)   return "rgb(172, 48, 133)";
+            if(this.dryIcon)    return "rgb(160, 56, 0)";
         }else if(totalColors == 2){
             if(this.brightIcon && this.dampIcon)    return "rgb(  0 255 122)";
             if(this.brightIcon && this.dryIcon)     return "rgb(200 122  20)";

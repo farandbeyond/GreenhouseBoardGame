@@ -277,18 +277,42 @@ function updateScoreIndicator(score){
     scoreIndicator.innerText = "Total (Marked) Score: " + score;
 }
 //functional: onClicks
-function onClickHand(event){
-    //find the click
-    var clickX = event.offsetX;
-    var clickY = event.offsetY;
+function scaleMouseClick(mouseClickX, mouseClickY, canvas){
+        var clickX = mouseClickX;
+        var clickY = mouseClickY;
 
-    //convert it into tile space
-    var tileX = Math.floor(clickX / squareSize);
-    var tileY = Math.floor(clickY / squareSize);
+        var scaleX = canvas.scrollWidth / canvas.width;
+        var scaleY = canvas.scrollHeight / canvas.height;
+
+        clickX /= scaleX;
+        clickY /= scaleY;
+
+        //invert Y, so it visually matches our click (top Left is 0/0)
+        // clickY = canvas.height - clickY;
+
+        //since we are modifying the offset grid, add half the tilesize
+        // clickX -= tileSize / 2;
+        // clickY -= tileSize / 2;
+
+        return [clickX, clickY];
+}
+
+function onClickHand(event){
+
 
     //grab the hand that was clicked on
     var canvas = event.target;
     var index = canvas.number;
+
+    // //find the click
+    // var clickX = event.offsetX;
+    // var clickY = event.offsetY;
+
+    var scaledClick = scaleMouseClick(event.offsetX, event.offsetY, canvas);
+    
+    // //convert it into tile space
+    var tileX = Math.floor(scaledClick[0] / squareSize);
+    var tileY = Math.floor(scaledClick[1] / squareSize);
 
     //check1: if we click a previously hilighted tile, cancel the hilight
     if(hands[index].highlightX == tileX && hands[index].highlightY == tileY){
