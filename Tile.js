@@ -4,8 +4,32 @@ var cornerSize = 10;
 var fontHeight = 15;
 var fontRowLength = 25;
 
+const scoreImages = {}
+
+var s1 = new Image();
+s1.src = `./assets/tile/ScoreMarkers/TT_1.png`;
+scoreImages["1"] = s1;
+var s2 = new Image();
+s2.src = `./assets/tile/ScoreMarkers/TT_2.png`;
+scoreImages["2"] = s2;
+var s3 = new Image();
+s3.src = `./assets/tile/ScoreMarkers/TT_3.png`;
+scoreImages["3"] = s3;
+var s_1 = new Image();
+s_1.src = `./assets/tile/ScoreMarkers/TT_-1.png`;
+scoreImages["-1"] = s_1
+var s_2 = new Image();
+s_2.src = `./assets/tile/ScoreMarkers/TT_-2.png`;
+scoreImages["-2"] = s_2
+var s_3 = new Image();
+s_3.src = `./assets/tile/ScoreMarkers/TT_-3.png`;
+scoreImages["-3"] = s_3
+
 class Tile{
     // scoreNote;
+    
+
+
     constructor(name, text, brightIcon, dampIcon, darkIcon, dryIcon, imgPath){
         this.name = name;
         this.text = text;
@@ -14,7 +38,10 @@ class Tile{
         this.darkIcon = darkIcon;
         this.dryIcon = dryIcon;
         this.scoreNote = 0;
+        this.img = new Image();
+
         this.updateImgPath(imgPath);
+        this.img.src = this.fullImgPath;
     }
     get tileName(){
         return this.name;
@@ -29,9 +56,38 @@ class Tile{
         if(this.dryIcon) this.fullImgPath += "Dry";
         if(!this.brightIcon && !this.dampIcon && !this.darkIcon && !this.dryIcon) this.fullImgPath += this.name;
         this.fullImgPath += ".png";
+        this.img.src = this.fullImgPath;
     }
 
     draw(canvas, tileX, tileY){
+        if(legacyTiles){
+            this.drawLegacy(canvas, tileX, tileY);
+        }else{
+            //get the graphics to draw with
+            var ctx = canvas.getContext("2d");
+
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = this.myBackgroundColor;
+
+            //switch from Grid measurements to Canvas measurements
+            var positionX = tileX * squareSize;
+            var positionY = tileY * squareSize;
+
+            //draw shayla's image, scaled to the tile size
+            ctx.drawImage(this.img, positionX, positionY, squareSize, squareSize);
+
+            //draw the score overlay
+            // ctx.font = "13px sans-serif";
+            // ctx.strokeStyle = this.scoreNote > 0 ? "green" : "red";
+            // ctx.strokeText(`---|${Math.abs(this.scoreNote)}|---`, positionX, positionY + 2 * fontHeight, squareSize);
+            if(this.scoreNote != 0 && this.scoreNote <= 3 && this.scoreNote >= -3){
+                var key = this.scoreNote + "";
+                ctx.drawImage(scoreImages[key], positionX + squareSize / 3, positionY, 48, 48);
+            }
+        }
+        
+    }
+    drawLegacy(canvas, tileX, tileY){
         //get the graphics to draw with
         var ctx = canvas.getContext("2d");
 

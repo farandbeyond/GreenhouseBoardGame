@@ -22,6 +22,7 @@ var activeObjectiveToggles = [];
 
 //control variables
 var safeMode = true;
+var legacyTiles = false;
 
 //global access: Board and Hand(s)
 var board;
@@ -585,6 +586,7 @@ function main(){
 
     //...and the checkboxes
     document.getElementById("safeModeCheck").onchange = (e => safeMode = e.target.checked);
+    document.getElementById("legacyGraphicsCheck").onchange = (e => {legacyTiles = e.target.checked; redrawAll();});
     document.getElementById("hideObjectiveCards").onchange = (e => {
         handCanvases.forEach(canvas => {
             if(e.target.checked){
@@ -606,3 +608,5 @@ function main(){
 }
 
 main();
+//redraw everything 2 seconds after the page loads
+setTimeout(redrawAll, 750);
