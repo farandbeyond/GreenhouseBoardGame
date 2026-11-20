@@ -15,6 +15,9 @@ scoreImages["2"] = s2;
 var s3 = new Image();
 s3.src = `./assets/tile/ScoreMarkers/TT_3.png`;
 scoreImages["3"] = s3;
+var s4 = new Image();
+s4.src = `./assets/tile/ScoreMarkers/TT_4.png`;
+scoreImages["4"] = s4;
 var s_1 = new Image();
 s_1.src = `./assets/tile/ScoreMarkers/TT_-1.png`;
 scoreImages["-1"] = s_1
@@ -24,6 +27,9 @@ scoreImages["-2"] = s_2
 var s_3 = new Image();
 s_3.src = `./assets/tile/ScoreMarkers/TT_-3.png`;
 scoreImages["-3"] = s_3
+var s_4 = new Image();
+s_4.src = `./assets/tile/ScoreMarkers/TT_-4.png`;
+scoreImages["-4"] = s_4;
 
 class Tile{
     // scoreNote;
@@ -80,7 +86,7 @@ class Tile{
             // ctx.font = "13px sans-serif";
             // ctx.strokeStyle = this.scoreNote > 0 ? "green" : "red";
             // ctx.strokeText(`---|${Math.abs(this.scoreNote)}|---`, positionX, positionY + 2 * fontHeight, squareSize);
-            if(this.scoreNote != 0 && this.scoreNote <= 3 && this.scoreNote >= -3){
+            if(this.scoreNote != 0 && this.scoreNote <= 4 && this.scoreNote >= -4){
                 var key = this.scoreNote + "";
                 ctx.drawImage(scoreImages[key], positionX + squareSize / 3, positionY, 48, 48);
             }
