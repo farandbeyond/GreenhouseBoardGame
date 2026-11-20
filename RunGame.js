@@ -444,7 +444,13 @@ function setupNewGame(){
     // handCanvas.onclick = onClickHand;
 
     //get a number of hands, equal to the number of selected players
-    document.getElementById("hands").childNodes.forEach(e => e.remove());
+    // console.log(names);
+    var oldNames = [];
+    for(var i=0;i<names.length;i++){
+        // console.log(names[i].value);
+        oldNames[i] = names[i].value;
+    }
+    document.getElementById("hands").replaceChildren();
     handCanvases.forEach(e => {
         e.remove();
     });
@@ -468,6 +474,9 @@ function setupNewGame(){
         var thisPlayersName = document.createElement("Input");
         thisPlayersName.type="text";
         thisPlayersName.addEventListener("change", e => updateTurnIndicator());
+        if(oldNames[i]){
+            thisPlayersName.value = oldNames[i];
+        }
         names[i] = thisPlayersName;
 
         var handCombo = document.createElement("div");
