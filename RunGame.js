@@ -274,7 +274,7 @@ function updateBoardIndicator(){
     boardIndicator.innerText = tilesPlaced+" tiles Placed";
 }
 function updateScoreIndicator(score){
-    scoreIndicator.innerText = "Total (Marked) Score: " + score;
+    scoreIndicator.innerText = `Marked Score: ${score}`;
 }
 //functional: onClicks
 function scaleMouseClick(mouseClickX, mouseClickY, canvas){
@@ -336,11 +336,13 @@ function onClickHand(event){
     hands[index].draw(event.target);
 }
 function onClickBoard(event){
-    var clickX = event.offsetX;
-    var clickY = event.offsetY;
+    // var clickX = event.offsetX;
+    // var clickY = event.offsetY;
 
-    var tileX = Math.floor(clickX / squareSize);
-    var tileY = Math.floor(clickY / squareSize);
+    var scaledClick = scaleMouseClick(event.offsetX, event.offsetY, boardCanvas);
+
+    var tileX = Math.floor(scaledClick[0] / squareSize);
+    var tileY = Math.floor(scaledClick[1] / squareSize);
 
     // console.log(event);
     //if we ControlClick, bring up the Score Display Editing stuff
@@ -537,11 +539,11 @@ function setupNewGame(){
 }
 function passTurn(){
     if(turnPlayer != -1){
-        handCanvases[turnPlayer].style = "float: left; border: 1px solid #000000; margin: 1em;";
+        handCanvases[turnPlayer].style = "border: 1px solid #000000; margin: 1em;";
     }
     turnPlayer++;
     if(turnPlayer>=numPlayers) turnPlayer = 0;
-    handCanvases[turnPlayer].style = "float: left; border: 1em solid #FF0000; margin: 1px;";
+    handCanvases[turnPlayer].style = "border: 1em solid #FF0000; margin: 1px;";
     updateTurnIndicator();
 }
 

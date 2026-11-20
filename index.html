@@ -29,24 +29,35 @@
                 <div>
                     <button id="rulebookButton">Open Rulebook</button>
                 </div>
+                <div>
+                    <p id="deckIndicator">X Tiles Unseen</p>
+                </div>
             </div>
         </div>
         <main id="main">
-            <canvas id="board" width="700" height="700"></canvas>
-            <div id="gameState">
-                <img id="tileImg" class="tileImg" src="assets/tile/1_ZoneIntensity/Sun.png">
+            <div class="board-holder" id="board-holder">
+                <div class="board-status">
+                    <p id="turnIndicator">Someone's Turn</p>
+                    <p id="boardIndicator">X Tiles Placed</p>
+                    <p id="scoreIndicator">Total (Marked) Score: XX</p>
+                </div>
+                <canvas id="board" width="700" height="700"></canvas>
+            </div>
+            <div class="player-holder" id="player-holder">
+                <div id="tileImgDiv">
+                    <img id="tileImg" class="tileImg" src="assets/tile/1_ZoneIntensity/Sun.png">
+                </div>
                 
-                <p id="turnIndicator">Someone's Turn</p>
-                <p id="deckIndicator">X Tiles Unseen</p>
+                    
+                    <!-- <p id="objectiveInformer">Objective Cards: Hover your Hand</p>  -->
 
                 
-
-                <p id="boardIndicator">X Tiles Placed</p>
-                <p id="scoreIndicator">Total (Marked) Score: XX</p>
-                <p id="objectiveInformer">Objective Cards: Hover your Hand</p>
+                <div id="hands">
+                    
+                </div>
                 
             </div>
-            <div id="hands"></div>
+
             <!-- <canvas id="hand0" width="500", height="100" style="float: left; border: 1px solid #000000; margin: 1em;"></canvas> -->
         </main>
         <div>

@@ -1,69 +1,16 @@
+/* Global */
 body{
     background-color: burlywood;
 }
 main{
-    display: inline-block;
+    display: flex;
 }
 
+/* Controls (Top of Screen) */
 #board{
-    float: left; 
-    /* display: inline-block; */
+    /* float: left;  */
     border: 1px solid #000000;
 }
-#gameState{
-    max-width: 1000px; 
-    min-width: 600px;
-    height: 300px; 
-    display: inline-block; 
-    /* float: left;  */
-    border: 1px solid #000000; 
-    margin: 1em;
-}
-
-#gameState p{
-    /* display: inline; */
-    /* float: left;  */
-    margin: 1em;
-}
-
-#gameState img{
-    display: inline;
-    float: right; 
-}
-
-/* #hands canvas{
-    color: gray;
-    float: left;  
-    border: 1px solid #000000; 
-    margin: 1em;
-} */
-#handCombo{
-    /* display: inline; */
-    float: left;
-}
-#handCombo input{
-    display: block;
-}
-#handCombo canvas{
-    display: block;
-    border: 1px solid #000000; 
-    margin: 1em;
-}
-
-.tileImg{
-    width: 300px;
-    height: 300px;
-}
-
-#objective-cards .card-div{
-    border: 1px solid black;
-    background-color: palegreen;
-    display: inline;
-    /* min-width: 2.5em; */
-    min-height: 2em;
-    /* float: right; */
-}
-
 .control-box{
     display: inline-flex;
     width: 95%;
@@ -80,7 +27,12 @@ main{
     display: grid;
     grid-template-columns: 20% 20% 20% 20%;
 }
-
+#objective-cards .card-div{
+    border: 1px solid black;
+    background-color: palegreen;
+    display: inline;
+    min-height: 2em;
+}
 #gameStart button{
     width: 95%;
     height: auto;
@@ -96,4 +48,64 @@ main{
     height: auto;
     margin: 2.5%;
     padding: 2.5%;
+}
+
+/* Board Section */
+#board-holder{
+    width: 35%;
+    height: auto;
+    display: inline-block;
+}
+.board-status{
+    width: 100%;
+    text-align: center;
+}
+.board-status p{
+    width: 25%;
+    padding: 5px 5px 0px 5px;
+    display: inline-block;
+    background-color: rgb(170, 96, 0);
+    font-size: larger;
+}
+#board{
+    display: inline-block;
+    width: 100%;
+    height: auto;
+}
+
+/* Player Section */
+#player-holder{
+    width: 63%;
+    display: inline-block;
+    margin: 1%;
+}
+#tileImgDiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tileImg{
+    width: 30%;
+    height: auto;
+    display: inline-block;
+    vertical-align: middle;
+}
+#hands{
+    display: inline-grid;
+    grid-template-columns: 49% 49%;
+}
+#handCombo{
+    display: inline;
+    margin: 5px;
+    border: solid black 2px;
+}
+#handCombo input{
+    margin: 2px 0 0 2px;
+    display: inline;
+}
+#handCombo canvas{
+    display: inline;
+    width: 90%;
+    border: 1px solid #000000; 
+    margin: 1em;
 }
